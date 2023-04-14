@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&family=Ubuntu&display=swap');
+
+/* 
+-----Varibles-----
+*/
+:root {
+    /* --clr-primary: rgb(60, 255, 0); */
+    --clr-primary-light: rgb(219, 219, 219);
+    --clr--red: #EF2D56;
+    --clr--blue: #5438DC;
+    --clr--green: #35FF69 ;
+    --clr--yellow: #F4D35E;
+    --clr--black: #0E1116;
+    --clr--grey: #8596a7;
+    --clr--white: #F7F5FB;
+    --clr--bluelight:#dce5ff  ;
+    --ff-primary: 'Roboto',
+        sans-serif;
+    --ff-secondary: 'Quicksand', sans-serif;
+    --transition: all 0.3s linear;
+    --letter-spacing: 0.25rem;
+    --radius: 2rem;
+    --line-height: 4rem;
+}
+/* Global Styles */
+*::after,*::before,*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body{
+    font-family: var(--ff-primary);
+    background-color: var(--clr--white);
+}
+#innerHero{
+    padding: 6rem 0 4rem 7rem;
+}
