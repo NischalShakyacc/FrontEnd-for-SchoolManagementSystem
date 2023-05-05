@@ -14,7 +14,7 @@ export default function Home() {
         text="We provide the best education to our students."
         btnClass="btn"
         buttonText = "Get Enrolled"
-        url="/"
+        url="/enroll"
         heroText ="hero-text big"
       />
       
