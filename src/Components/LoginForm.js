@@ -11,10 +11,10 @@ export default function LoginForm() {
     //     console.log(Object.fromEntries(data.entries()))
     // }
 
-    const [values, setValues] = useState({
+    const [credentails, setCredentials] = useState({
         username:"",
         password:'',
-        user: 'student'
+        usertype: 'Student'
     })
     const inputs = [
         {
@@ -36,38 +36,45 @@ export default function LoginForm() {
         }
     ];
 
-    const handleLoginSubmit = (e) =>{
-        e.preventDefault();
-    }
-
     const onChange = (e) =>{
-        setValues({...values,[e.target.name]:e.target.value})
+        setCredentials({...credentails,[e.target.name]:e.target.value})
     }
     const changeUser = (e) =>{
-        setValues({...values, 'user':e.target.value})
+        setCredentials({...credentails, 'user':e.target.value})
     }
-    console.log(values)
 
-    const handleLogin = () =>{
-        //validate();
-
+    const handleLogin = async (e) =>{
+        e.preventDefault();
+        const response = await fetch("http://localhost:6000/api/auth/login",{
+            method: "POST",
+            headers: {
+                'Content-Type' : 'application/json'
+            },
+            body: JSON.stringify({
+                username: credentails.username,
+                password: credentails.password,
+                usertype: credentails.usertype
+            })
+        });
+        const json = await response.json();
+        console.log(json)
     }
 
     return (
     <div className='login-form'>
         <h2 className='message'>Please Enter the Credentials</h2>
-        <form  onSubmit={handleLoginSubmit}>
+        <form onSubmit={handleLogin}>
         {
             inputs.map((input) => (
-                <LoginInput key={input.id} {...input} value={values[input.name]} onChange={onChange} />
+                <LoginInput key={input.id} {...input} value={credentails[input.name]} onChange={onChange} />
             ))
         }
-            <select className='user-select' onChange={changeUser}>
+            <select name="usertype" className='user-select' onChange={changeUser}>
                 <option className='opt'>Student</option>
                 <option className='opt'>Teacher</option>
                 <option className='opt'>Admin</option>
             </select>
-            <button type='submit' onSubmit={handleLogin}>Log In</button>
+            <button type='submit'>Log In</button>
         </form>
     </div>
     )

@@ -12,25 +12,31 @@ import Result from './Routes/Admin/Result';
 import StudentList from "./Routes/Admin/StudentList";
 import TeacherList from "./Routes/Admin/TeacherList";
 import Classroom from "./Routes/Admin/Classroom";
+import NoticeState from "./context/notices/NoticeState";
 
 function App() {
   return (
     <div className="App">
-      <Navbar/>
-      <SideNavbar/>
-      <Routes>
-        <Route element={<Profile/>} exact path='/profile' />
-        <Route element={<Notice/>} exact path="/notice"/>
-        <Route element={<Result/>} exact path="/result"/>
-        <Route element={<TeacherList/>} exact path="/teacherList" />
-        <Route element={<Classroom/>} exact path="/classroom" />
-        <Route element={<StudentList/>} path="/classroom/:classID"/>
+      <NoticeState>
+        <Navbar/>
+        <SideNavbar/>
+        <div className="containerApp">
         
-        <Route element={<Home/>} exact path='/' />
-        <Route element={<Contact/>} exact path='/contact' />
-        <Route element={<Enroll/>}  exact path='/enroll' />
-        <Route element={<Login/>}  exact path='/login' />
-      </Routes>
+          <Routes>
+            <Route element={<Profile/>} exact path='/profile' />
+            <Route element={<Notice/>} exact path="/notice"/>
+            <Route element={<Result/>} exact path="/result"/>
+            <Route element={<TeacherList/>} exact path="/teacherList" />
+            <Route element={<Classroom/>} exact path="/classroom" />
+            <Route element={<StudentList/>} path="/classroom/:classID"/>
+            
+            <Route element={<Home/>} exact path='/' />
+            <Route element={<Contact/>} exact path='/contact' />
+            <Route element={<Enroll/>}  exact path='/enroll' />
+            <Route element={<Login/>}  exact path='/login' />
+          </Routes>
+        </div>
+      </NoticeState>
     </div>
   );
 }

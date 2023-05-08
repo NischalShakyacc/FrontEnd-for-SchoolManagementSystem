@@ -1,10 +1,46 @@
 import React from 'react'
+//import resultContext from '../../context/results/ResultContext'
 
-export default function NoticeSection(props) {
+export default function ResultSection() {
+
+    const resultsInitial=[
+    {
+    "_id": "64525a08dbb2891993671499",
+        "user": "6443ddec555711926c9adbe1",
+        "name": "title forxczxc result",
+        "userresult": "My rekjnkjsasdasdult Sucks",
+        "date": "2023-05-03T12:56:40.111Z",
+        "__v": 0
+    },
+    {
+        "_id": "64586d3da9a8ea845f031a3a",
+        "user": "6443ddec555711926c9adbe1",
+        "name": "title forxczxc result",
+        "userresult": "New Result 123456789",
+        "date": "2023-05-08T03:32:13.926Z",
+        "__v": 0
+    },
+    {
+        "_id": "645871bb8d56a957db29f2c5",
+        "user": "6443ddec555711926c9adbe1",
+        "name": "title forxczxc result",
+        "userresult": "New Result 123456789",
+        "date": "2023-05-08T03:51:23.145Z",
+        "__v": 0
+    },
+    {
+        "_id": "645875883cdc4231d8be3ceb",
+        "user": "6443ddec555711926c9adbe1",
+        "name": "title forxczxc result",
+        "userresult": "New Result 123456789",
+        "date": "2023-05-08T04:07:36.930Z",
+        "__v": 0
+    }
+];
         return (
         <> 
         {
-            (props.data).map((value,index)=>{
+            resultsInitial.map((value,index)=>{
             return(
                 
                 <div className="accordion" id="accordionExample" style={{width:'95%'}}>
@@ -13,10 +49,10 @@ export default function NoticeSection(props) {
                     <button className="accordion-button collapsed" 
                     type="button" 
                     data-bs-toggle="collapse" 
-                    data-bs-target={"#collapse".concat(value.number)}
+                    data-bs-target={"#collapse".concat(index)}
                     aria-expanded="false" 
-                    aria-controls={"collapse".concat(value.number)}>
-                    {value.title}
+                    aria-controls={"collapse".concat(index)}>
+                    {value.name}
                     <div 
                     style={
                         {paddingLeft:'1rem',fontSize:'0.7rem',color:'var(--clr--grey)'}}>
@@ -24,11 +60,11 @@ export default function NoticeSection(props) {
                     </div>
                     </button>
                 </h2>
-                    <div id={"collapse".concat(value.number)} className="accordion-collapse collapse" 
-                    aria-labelledby={"heading".concat(value.number)}
+                    <div id={"collapse".concat(index)} className="accordion-collapse collapse" 
+                    aria-labelledby={"heading".concat(index)}
                     data-bs-parent="#accordionExample">
                         <div className="accordion-body">
-                            {value.description}
+                            {value.userresult}
                         </div>
                     </div>
                 </div>
