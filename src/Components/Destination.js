@@ -2,38 +2,41 @@ import React from 'react'
 import "./Styles/Destination.css"
 import DestinationData from './DestinationData'
 
-import img1 from '../images/login.jpg'
+import img1 from '../images/scholar.jpg'
 import img2 from '../images/signup.jpg'
+
+import img3 from '../images/login.jpg'
+import img4 from '../images/student.jpg'
 
 export default function Destination() {
     return (
     <div className='destination'>
-        <h1>Name Pricipal</h1>
-        <h2>Principal</h2>
+        <hr></hr>
+        <h1>"The roots of education are bitter, but the fruit is sweet."</h1>
         <p>
-            The concept of in Maha Upanishad beautifully
+            -Aristotle
         </p>
+        <hr></hr>
 
         <DestinationData
         cName="desc-first"
-        heading="Rasimra Lamba"
-        text=" The concept of वसुधैव कुटुम्बकम in Maha Upanishad beautifully captures the essence of our existence as being part of one family. The theme of the academic year 2022-23 reminds us that we are not only one family but we live i will livein a computer for a year and become a robot ja robot ja zoom zoom
-        dsada sdas dasda sd asdda sd asd asdas d asd asd asd
-        as sdasdsd asd ad ad asd ada sd asd asd asas das dasda da asd asd asd asd asd asda
-        a sdas das dasd asd asd asd"
+        heading="Rasimra Lama - Principal"
+        text=" Our teachers and staff are the heart of our school community, and we are proud to have a team of dedicated and passionate educators. Check out our faculty page to learn more about our teachers' backgrounds, expertise, and interests."
         image1 = {img1}
         image2 = {img2}
         />
 
         <DestinationData
         cName='desc-first-reverse'
-        heading="Sunbil Lamba"
-        text=" The concept of वसुधैव कुटुम्बकम in Maha Upanishad beautifully captures the essence of our existence as being part of one family. The theme of the academic year 2022-23 reminds us that we are not only one family but we live i will livein a computer for a year and become a robot ja robot ja zoom zoom
-        dsada sdas dasda sd asdda sd asd asdas d asd asd asd
-        as sdasdsd asd ad ad asd ada sd asd asd asas das dasda da asd asd asd asd asd asda
-        a sdas das dasd asd asd asd"
-        image1 = {img2}
-        image2 = {img1}
+        heading="Our Motives"
+        text='
+        ✅ Curated Curriculum 
+        ✅ Coductive and experientail learning environment
+        ✅ Excellent extracurriculur facilities
+        ✅ Highly qualifief and experienced teachers and staff
+        '
+        image1 = {img3}
+        image2 = {img4}
         />
     </div>
     )

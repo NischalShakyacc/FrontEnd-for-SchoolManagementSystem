@@ -6,7 +6,7 @@ export default function LoginInput(props) {
   return (
     <div className='form-input'>
         <label>{label}</label>
-        <input 
+        <input
         {...inputProps}
         onChange={onChange}
         />

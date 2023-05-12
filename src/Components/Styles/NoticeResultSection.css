@@ -1,0 +1,7 @@
+.actionitems{
+    font-size: 0.8rem;
+    padding-left: 1rem;
+}
+.actionitems > i{
+    padding: 0.5rem;
+}   

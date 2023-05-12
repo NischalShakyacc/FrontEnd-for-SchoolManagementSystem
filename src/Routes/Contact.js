@@ -13,6 +13,10 @@ export default function Contact() {
         heroImg = {ContactImg}
         title="Contact Us"
         text="We provide the best education to our students."
+        addtext="
+        Address: Thasikhel, Lalitpur, Nepal
+        Phone: 555-555-5555
+        Email: info@delightschool.edu"
         url="/contact"
         heroText ="hero-text"
       />

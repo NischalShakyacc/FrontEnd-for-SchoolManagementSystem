@@ -13,7 +13,7 @@ export default function Login() {
         shadow = "shadow-small"
         heroImg = {ContactImg}
         title="Login"
-        text="Get access to schools notice board and manu more."
+        text="Get access to schools notice board and many more."
         btnClass="btno"
         url="/login"
         heroText ="hero-text"

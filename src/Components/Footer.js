@@ -11,7 +11,7 @@ export default function Footer() {
             <p>Choose your schooling.</p>
         </div>
         <div>
-            <a href="/" >
+            <a href="https://www.facebook.com/rasmirasakya" target="blank" >
             <i className="fa-brands fa-facebook-square" aria-hidden="true"></i>
             </a>
             <a href="/">
@@ -32,10 +32,10 @@ export default function Footer() {
         </div>
         <div>
             <h4>Project</h4>
-            <a href="/">Chaasdnge Log</a>
-            <a href="/">Statasdus</a>
-            <a href="/">Liceasdnsce</a>
-            <a href="/">All Vasdersions</a>
+            <a href="/">Change Log</a>
+            <a href="/">Status</a>
+            <a href="/">License</a>
+            <a href="/">All Versions</a>
         </div>
       </div>
     </div>

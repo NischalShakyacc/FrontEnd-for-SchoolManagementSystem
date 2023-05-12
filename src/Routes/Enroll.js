@@ -12,7 +12,7 @@ export default function Enroll() {
         shadow = "shadow-small"
         heroImg = {ContactImg}
         title="Enroll"
-        text="Your kids deserve the best education."
+        text="To apply, students must share our commitment to academic excellence and our core values, complete an online application, provide transcripts, standardized test scores, and participate in an admissions interview. "
         btnClass="btno"
         url="/enroll"
         heroText ="hero-text"

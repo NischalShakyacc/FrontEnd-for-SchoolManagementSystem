@@ -4,7 +4,6 @@ import Footer from '../Components/Footer'
 import Hero from '../Components/Hero'
 
 export default function Home() {
-
   return (
     <>
       <Hero 
@@ -18,7 +17,6 @@ export default function Home() {
         url="/enroll"
         heroText ="hero-text big"
       />
-
     <Destination />
     <Footer/>
     </>

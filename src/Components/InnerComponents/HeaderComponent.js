@@ -1,5 +1,5 @@
 import React from 'react'
-import './InnerStyles/HeaderComponent.css'
+import '../Styles/HeaderComponent.css'
 
 export default function HeaderComponent(props) {
     const buttonExist = props.button;

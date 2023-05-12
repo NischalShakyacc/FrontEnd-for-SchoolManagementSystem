@@ -13,6 +13,7 @@ import StudentList from "./Routes/Admin/StudentList";
 import TeacherList from "./Routes/Admin/TeacherList";
 import Classroom from "./Routes/Admin/Classroom";
 import NoticeState from "./context/notices/NoticeState";
+import NewAccount from "./Routes/Admin/NewAccount.js"
 
 function App() {
   return (
@@ -21,8 +22,8 @@ function App() {
         <Navbar/>
         <SideNavbar/>
         <div className="containerApp">
-        
           <Routes>
+            <Route element={<NewAccount/>} exact path='/newaccount' />
             <Route element={<Profile/>} exact path='/profile' />
             <Route element={<Notice/>} exact path="/notice"/>
             <Route element={<Result/>} exact path="/result"/>
@@ -30,6 +31,7 @@ function App() {
             <Route element={<Classroom/>} exact path="/classroom" />
             <Route element={<StudentList/>} path="/classroom/:classID"/>
             
+
             <Route element={<Home/>} exact path='/' />
             <Route element={<Contact/>} exact path='/contact' />
             <Route element={<Enroll/>}  exact path='/enroll' />

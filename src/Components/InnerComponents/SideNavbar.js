@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import { NavLink } from 'react-router-dom'
 import { SideNavItems } from './SideMenuItems'
-import './InnerStyles/SideNavbar.css'
+import '../Styles/SideNavbar.css'
 
 export default function SideNavbar({children}) {
     const [isOpen, setIsOpen] = useState(false);

@@ -1,20 +1,27 @@
 
 .message{
-    margin: 1rem 0 2rem 0 ;
+    margin: 0 0 2rem 0 ;
     font-size: 1.2rem;
 }
-.login-form label{
+.danger{
+    margin: 0 0 2rem 0 ;
     font-size: 1.2rem;
+    color: red;
+}
+
+.login-form label{
+    font-size: 1rem;
 }
 .login-form input{
     height: 3rem;
     padding: 0 1.5rem;
-    margin-left:1rem;
+    margin-left:1.2rem;
     margin-bottom: 1.5rem;
-    border-radius: 4rem;
+    border-radius: 0.2rem;
     border: 1px solid var(--clr--grey);
     font-family: var(--ff-primary);
 }
+
 .login-form{
     margin: 2rem 0;
     display: flex;
@@ -48,7 +55,7 @@
     background-color: var(--clr--blue);
     color: var(--clr--white);
     border: none;
-    width: 100%;
+    width: 80%;
 }
 
 .error-message{
@@ -59,3 +66,16 @@
     margin-top: -1rem;
 }
 
+@media screen and (max-width: 800px ){
+    .login-form label{
+        font-size: 1rem;
+    }
+    .login-form input{
+        height: 2.5rem;
+        padding: 0 1rem;
+    }
+    .login-form button{
+        padding: 0.8rem 1rem;
+        border-radius: 4rem;
+    }
+}

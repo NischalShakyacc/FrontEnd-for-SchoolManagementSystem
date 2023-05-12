@@ -10,7 +10,7 @@ export default function Hero(props) {
                 <div className={props.heroText}>
                 <h1>{props.title}</h1>
                 <p>{props.text}</p>
-                
+                <p>{props.addtext}</p>
                 <a href={props.url} className={props.btnClass}>
                     {props.buttonText}
                 </a>

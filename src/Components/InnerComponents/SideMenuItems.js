@@ -29,6 +29,12 @@ export const SideNavItems = [
         url : '/classroom',
         cName : "side-nav-links",
         icon : 'fa-solid fa-chalkboard-user'
+    },
+    {
+        title : "New Account",
+        url : '/newaccount',
+        cName : "side-nav-links",
+        icon : 'fa-solid fa-user-plus'
     }
     //Add here
 ]
