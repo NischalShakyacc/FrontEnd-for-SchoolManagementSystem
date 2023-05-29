@@ -7,10 +7,8 @@ export default function Notice() {
     <div>
       <div id='innerHero'>
         <HeaderComponent name='Notice 📃' description='View all the notices here'
-        button="+ New Notice"
         />
-        <NoticeSection
-        />
+        <NoticeSection/>
       </div>
     </div>
   )

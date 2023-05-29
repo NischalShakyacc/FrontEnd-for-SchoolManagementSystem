@@ -112,7 +112,6 @@ export default function SignupSection() {
         }
             <select name="usertype" className='user-select' onChange={changeUser}>
                 <option className='opt'>Student</option>
-                <option className='opt'>Teacher</option>
                 <option className='opt'>Admin</option>
             </select>
             <button type='submit'>Create Account</button>

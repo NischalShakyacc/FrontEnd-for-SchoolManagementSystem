@@ -3,6 +3,7 @@ import '../Styles/HeaderComponent.css'
 
 export default function HeaderComponent(props) {
     const buttonExist = props.button;
+    
     if(!buttonExist){
         return(
             <div className='header-section'>
@@ -13,6 +14,7 @@ export default function HeaderComponent(props) {
             </div>
         )
     }else{
+
         return (
         <div className='header-section'>
             <div>

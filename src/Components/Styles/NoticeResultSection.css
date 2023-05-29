@@ -1,7 +1,49 @@
+/*No use as of now*/
+.additem-btn{
+    height: 3rem;
+    width: 10rem;
+    font-family: var(--ff-secondary);
+    background-color: var(--clr--blue);
+    color: var(--clr--white);
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 0.2rem;
+    transition: all 0.2s;
+    margin-bottom: 1rem;
+}
+
 .actionitems{
+    display: block;
     font-size: 0.8rem;
     padding-left: 1rem;
 }
 .actionitems > i{
     padding: 0.5rem;
-}   
+} 
+
+.actionicon{
+    height: 1.5rem;
+    font-family: var(--ff-secondary);
+    border: none;
+    font-size: 0.7rem;
+    padding: 0rem 0.7rem;
+    cursor: pointer;
+    border-radius: 0.2rem;
+    transition: all 0.4s ;
+    margin: 1rem;
+}
+.icondelete{
+    background-color: var(--clr--red);
+    color: var(--clr--white);
+}
+.iconedit{
+    background-color: var(--clr--yellow);
+    color: var(--clr--black);
+}
+.actionicon:hover{
+    background-color: var(--clr--blue);
+    color: var(--clr--white);
+
+}
+

@@ -1,53 +1,29 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import NoticeContext from '../../context/notices/NoticeContext'
 import "../Styles/NoticeResultSection.css"
+import AddNote from './AddNote';
+import UpdateSection from './UpdateSection'
+//import AlertMessage from '../AlertMessage'
 
 export default function NoticeSection() {
-    const noticeInfo = [
-        {
-        key:1,
-        title: 'School Re-opens',
-        date:'10th March 2022',
-        usernotice: `School reopens on Sunday, 15th March 2022`,
-        number: 'One'
-        },
-        
-        {
-        key:2,
-        title: 'Admission Open',
-        date:'2nd February 2022',
-        usernotice: `Admission Open for the Academic Session 2080
-        PG to Grade 9
-        Register Now! `,
-            number: 'Two'
-        },
-        {
-        key:2,
-        title: 'School Location',
-        date:'30th January 2022',
-        usernotice: `We have some great news to share! From the new academic session 2080 we will be relocating to a new location! 
-        able their overall development! `,
-        number: 'Three'
-        },
-        {
-        key:2,
-        title: 'Saraswati Puja Location',
-        date:'26 January 2022',
-        usernotice: `Admissions Open! 
-        On the auspicious day of Sarsaswati Puja enroll your child in our school and get Free Admission! 
-        What better day to start your child’s learning journey than today, on Saraswati Puja  📖📚🖊️✍️`,
-        number: 'Four'
-        
-        }
-    ];
+    const context = useContext(NoticeContext)
+    const {notices, deleteNotice, fetchNotice} = context;
+    useEffect(()=>{
+        fetchNotice()
+        // eslint-disable-next-line
+    },[])
+
         return (
         <> 
-        {
-            noticeInfo.map((value,index)=>{
+        <AddNote/>
+        {notices.length === 0 ? "No notices to display. Add Notice.":""}
+        {   
+            notices.map((value,index)=>{
+            const d = new Date(value.date) 
             return(
-                
-                <div className="accordion" id="accordionExample" style={{width:'95%'}}>
+                <div className="accordion" key={value._id} id="accordionExample" style={{width:'95%'}}>
                 <div className="accordion-item">
-                <h2 class="accordion-header" id={"heading".concat(index)}>
+                <h2 className="accordion-header" id={"heading".concat(index)}>
                     <button className="accordion-button collapsed" 
                     type="button" 
                     data-bs-toggle="collapse" 
@@ -58,14 +34,18 @@ export default function NoticeSection() {
                     <div 
                     style={
                         {paddingLeft:'1rem',fontSize:'0.7rem',color:'var(--clr--grey)'}}>
-                        {value.date}
-                    </div>
-                    <div className='actionitems'>
-                        <i className='fa-solid fa-user-plus'></i>
-                        <i className='fa-solid fa-message'></i>
+                        {d.toDateString()}
                     </div>
                     </button>
-                </h2>
+
+                    <div className='actionitems'>
+                        <UpdateSection noticeTitle={value.title} noticeUsernotice={value.usernotice} noticeID = {value._id}/>
+                        
+                        <button className='actionicon icondelete' onClick={()=>{deleteNotice(value._id);}}>
+                        <i className="fa-solid fa-trash"></i> Delete
+                        </button>
+                    </div>
+                    </h2>
                     <div id={"collapse".concat(index)} className="accordion-collapse collapse" 
                     aria-labelledby={"heading".concat(index)}
                     data-bs-parent="#accordionExample">

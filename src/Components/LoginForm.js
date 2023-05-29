@@ -49,8 +49,6 @@ export default function LoginForm() {
     const handleLogin = async (e) =>{
         e.preventDefault();
         console.log(credentails);
-        // For admin only
-        if (credentails.usertype === 'Admin'){
         try{
             const response = await fetch("http://localhost:5000/api/auth/login",{
                 method: "POST",
@@ -66,25 +64,25 @@ export default function LoginForm() {
             const json = await response.json();
             console.log(json);
             if(json.success){
+                //alert Message
+                
+
                 //redirect
                 localStorage.setItem('token',json.authToken);
-                navigation('/');
+                navigation('/profile');
+
             }else{
-                alert("Invalid Credintials")
+                alert("not happen")
             }
         }
-            catch(error){
-                console.log(error.message)
-            }   
-        }else{
-            alert("Invalid Login Credentials")
+        catch(error){
+            console.log(error.message)
         }
     }
 
     return (
     <div className='login-form'>
         <h2 className='message'>Please Enter the Credentials</h2>
-     
 
             <form onSubmit={handleLogin}>
             {
@@ -94,7 +92,6 @@ export default function LoginForm() {
             }
                 <select name="usertype" className='user-select' onChange={changeUser}>
                     <option className='opt'>Student</option>
-                    <option className='opt'>Teacher</option>
                     <option className='opt'>Admin</option>
                 </select>
                 <button type='submit'>Log In</button>
