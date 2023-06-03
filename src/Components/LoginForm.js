@@ -2,15 +2,10 @@ import React,{useState} from 'react'
 import "./Styles/LoginForm.css"
 import LoginInput from './LoginInput'
 import { useNavigate } from 'react-router-dom';
+import AlertMessage from './AlertMessage';
 
 
 export default function LoginForm() {
-    
-    // const handleLoginSubmit = (e) =>{
-    //     e.preventDefault();
-    //     const data = new FormData(e.target);
-    //     console.log(Object.fromEntries(data.entries()))
-    // }
 
     const [credentails, setCredentials] = useState({
         username:"",
@@ -39,8 +34,12 @@ export default function LoginForm() {
         }
     ];
 
+    // State for alert
+    const [showAlert, setShowAlert] = useState(false)
+
     const onChange = (e) =>{
         setCredentials({...credentails,[e.target.name]:e.target.value})
+        setShowAlert(false);
     }
     const changeUser = (e) =>{
         setCredentials({...credentails, 'usertype':e.target.value})
@@ -48,7 +47,7 @@ export default function LoginForm() {
 
     const handleLogin = async (e) =>{
         e.preventDefault();
-        console.log(credentails);
+        //console.log(credentails);
         try{
             const response = await fetch("http://localhost:5000/api/auth/login",{
                 method: "POST",
@@ -64,15 +63,14 @@ export default function LoginForm() {
             const json = await response.json();
             console.log(json);
             if(json.success){
-                //alert Message
-                
-
                 //redirect
                 localStorage.setItem('token',json.authToken);
                 navigation('/profile');
+                window.location.reload(false)
 
             }else{
-                alert("not happen")
+                //alert Message
+                setShowAlert(true);
             }
         }
         catch(error){
@@ -91,11 +89,14 @@ export default function LoginForm() {
                 ))
             }
                 <select name="usertype" className='user-select' onChange={changeUser}>
-                    <option className='opt'>Student</option>
+                    <option className='opt'>
+                        Student
+                    </option>
                     <option className='opt'>Admin</option>
                 </select>
                 <button type='submit'>Log In</button>
             </form>
+            {showAlert && <AlertMessage severe="error" timeout="3000" message="Invalid Login Information!" />}
     </div>
     )
 }

@@ -1,5 +1,6 @@
 import React from 'react'
 import '../Styles/HeaderComponent.css'
+import { Link } from 'react-router-dom';
 
 export default function HeaderComponent(props) {
     const buttonExist = props.button;
@@ -21,7 +22,13 @@ export default function HeaderComponent(props) {
                 <h1 className='header-name' >{props.name}</h1>
                 <p className='header-description'>{props.description}</p>
             </div>
-            <div><button className='header-btn'>{props.button}</button>
+            <div>
+            <Link to = {props.url}> 
+                <button className='header-btn'>
+                {props.button}
+                </button>
+            </Link>
+            
             </div>
         </div>
         )

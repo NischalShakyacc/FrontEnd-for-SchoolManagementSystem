@@ -16,12 +16,6 @@ export const MenuItems = [
         url : "/contact",
         cName : "nav-links",
         icon : 'fa-solid fa-address-book'
-    },
-    {
-        title : "Login",
-        url : "/login", 
-        cName : "nav-links-log",
-        icon : ''
     }
     //Add here
 ]

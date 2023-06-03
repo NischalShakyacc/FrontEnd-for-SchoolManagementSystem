@@ -33,3 +33,20 @@
         font-size: 95%;
     }
 }
+
+.messageform{
+    font-size: 0.8rem;
+    color:var(--clr--grey);
+    margin: 0;
+}
+.messageformLarge{
+    font-size: 1rem;
+    color:var(--clr--grey);
+    margin-bottom: 1rem;
+    color: black;
+}
+
+.drop{
+    padding-bottom: 0.5rem;
+}
+

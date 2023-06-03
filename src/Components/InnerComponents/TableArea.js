@@ -1,53 +1,68 @@
-import * as React from 'react';
+import React, { useContext, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
+import UserContext from '../../context/user/UserContext';
 
 const columns = [
     { field: 'id', headerName: 'ID', width: 90 },
-    { field: 'firstName', headerName: 'First name', width: 150 },
-    { field: 'lastName', headerName: 'Last name', width: 150 },
+    { field: 'name', headerName: 'Full Name', width: 150 },
+    
     {
-        field: 'age',
-        headerName: 'Age',
-        type: 'number',
+        field: 'gender',
+        headerName: 'Gender',
         width: 100,
     },
     {
-        field: 'fullName',
-        headerName: 'Full name',
-        description: 'This column has a value getter and is not sortable.',
-        sortable: false,
+        field: 'phone',
+        headerName: 'Phone',
+        description: 'The Teachers phone number is here.',
         width: 160,
-        valueGetter: (params) =>
-        `${params.row.firstName || ''} ${params.row.lastName || ''}`,
+        sortable:false
     },
     {
-        field:'action',
-        headerName: 'Actions',
-        description: 'Permanently delete the record.',
-        sortable: false,
-        width: 150
-
-    }
+        field: 'address',
+        headerName: 'Address',
+        description: 'The Teachers address is here.',
+        width: 160,
+    },
+    {
+        field: 'grade',
+        headerName: 'Grade',
+        description: 'The grade is here.',
+        width: 160,
+    },
     ];
 
-const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35},
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-    ];
+
 
 export default function TableArea() {
+
+    const context  = useContext(UserContext);
+    const {teachersinfo,getTeachers} = context;
+
+    let info = [];
+
+    useEffect(()=>{
+        getTeachers()
+    },[])
+    
+    if(localStorage.getItem('token')){
+        teachersinfo.forEach((value,index)=>{
+            info.push({
+                id: ++index, 
+                name: value.name, 
+                gender: value.gender, 
+                phone: value.phone, 
+                address: value.address,
+                grade: value.grade,
+            })
+        })
+    }
+    
     return (
     <>
-        <div style={{ height: 600, width: '95%' }}>
+        <div style={{ height: 475, width: '95%' }}>
         <DataGrid
-            rows={rows}
+            rows={info}
             columns={columns}
             pageSize={10}
             rowsPerPageOptions={[5]}

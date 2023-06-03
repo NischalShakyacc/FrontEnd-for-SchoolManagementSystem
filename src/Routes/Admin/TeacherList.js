@@ -10,6 +10,7 @@ export default function TeacherList() {
                     name="Teacher List" 
                     description="All teachers in the School." 
                     button="+ Add Account"
+                    url="/newaccount"
                 />
                 <TableArea/>
             </div>

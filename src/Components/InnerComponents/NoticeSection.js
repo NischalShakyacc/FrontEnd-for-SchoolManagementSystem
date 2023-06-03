@@ -5,18 +5,37 @@ import AddNote from './AddNote';
 import UpdateSection from './UpdateSection'
 import AlertMessage from '../AlertMessage'
 import { useNavigate } from 'react-router-dom';
+import UserContext from '../../context/user/UserContext';
 
 export default function NoticeSection() {
     const context = useContext(NoticeContext);
-    let navigate = useNavigate();
     const {notices, deleteNotice, fetchNotice} = context;
+
+    const usercontext = useContext(UserContext);
+    const {userinfo, fetchUserinfo} = usercontext;
+
+    const [isadmin,setIsadmin] = useState(false);
+
+    let navigate = useNavigate();
+    
     useEffect(()=>{
-        console.log(localStorage.getItem('token'));
         if(localStorage.getItem('token')){
+
+            //fetchUserinfo();
+
             fetchNotice();
+            
+
+            if(userinfo.usertype === 'Admin'){
+                console.log(" admin")
+                setIsadmin(true);
+            }else{
+                console.log("not admin")
+                console.log(userinfo.usertype)
+            }
         }
         else{
-            navigate.push('/login');
+            navigate('/login');
         }
         // eslint-disable-next-line
     },[])
@@ -28,11 +47,10 @@ export default function NoticeSection() {
     }
         return (
         <> 
-        <AddNote/>
+        {isadmin && <AddNote/>}
         {notices.length === 0 ? "No notices to display. Add Notice.":""}
         {   
             notices.map((value,index)=>{
-            const d = new Date(value.date) 
             return(
                 <div className="accordion" key={value._id} id="accordionExample" style={{width:'95%'}}>
                 <div className="accordion-item">
@@ -47,16 +65,16 @@ export default function NoticeSection() {
                     <div 
                     style={
                         {paddingLeft:'1rem',fontSize:'0.7rem',color:'var(--clr--grey)'}}>
-                        {d.toDateString()}
+                        {new Date(value.date).toDateString()}
                     </div>
                     </button>
 
                     <div className='actionitems'>
-                        <UpdateSection noticeTitle={value.title} noticeUsernotice={value.usernotice} noticeID = {value._id}/>
+                        {isadmin && <UpdateSection noticeTitle={value.title} noticeUsernotice={value.usernotice} noticeID = {value._id}/>}
                         
-                        <button className='actionicon icondelete' onClick={()=>{deleteNotice(value._id); alertDelete()}}>
+                        {isadmin && <button className='actionicon icondelete' onClick={()=>{deleteNotice(value._id); alertDelete()}}>
                         <i className="fa-solid fa-trash"></i> Delete
-                        </button>
+                        </button>}
                     </div>
                     </h2>
                     <div id={"collapse".concat(index)} className="accordion-collapse collapse" 
@@ -75,3 +93,4 @@ export default function NoticeSection() {
         </>
     )
 }
+

@@ -71,14 +71,15 @@ export default function UpdateSection(props) {
                         Notice must be longer than 10 letters.
                     </Form.Text>
                 </Form.Group>
+
             </Modal.Body>
             <Modal.Footer>
             <Button className="additem-btn icondelete" onClick={handleClose}>
                 Close
             </Button>
-            <Button className="additem-btn iconedit" type='submit'>
-                Update Notice
-            </Button>
+                <Button className="additem-btn iconedit" type='submit'>
+                    Update Notice
+                </Button>
             </Modal.Footer>
             </Form>
         </Modal>

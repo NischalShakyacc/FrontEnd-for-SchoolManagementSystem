@@ -73,6 +73,7 @@ const NoticeState = (props) =>{
 
     }
 
+    
     //Update a notice
     const updateNotice = async (id,title,usernotice) =>{
         //API call

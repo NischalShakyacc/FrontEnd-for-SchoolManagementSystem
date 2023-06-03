@@ -65,6 +65,7 @@
 }
 
 .nav-links-log{
+    border: none;
     font-size: 1rem;
     color: var(--clr--black);
     background-color:var(--clr--yellow) ;
@@ -74,7 +75,9 @@
     cursor: pointer;
     text-decoration: none;
 }
-
+.nav-links-log i{
+    padding-left: 1rem;
+}
 .menu-icons{
     display: none;
     font-size: 1.2rem;

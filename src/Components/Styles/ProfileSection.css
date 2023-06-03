@@ -45,3 +45,23 @@
     font-size: 1rem;
 }
 
+.header-btn{
+    height: 3rem;
+    width: 10rem;
+    font-family: var(--ff-secondary);
+    background-color: var(--clr--red);
+    color: var(--clr--white);
+    border: none;
+    font-size: 1.1rem;
+    cursor: pointer;
+    border-radius: 0.2rem;
+    transition: all 0.4s ;
+    margin-bottom: 1rem;
+}
+
+.header-btn >i{
+    padding-right: 1rem;
+}
+.header-btn:hover{
+    background-color: var(--clr--blue);
+}

@@ -1,7 +1,17 @@
-import React from 'react'
+import React,{useEffect} from 'react'
+import { useNavigate } from 'react-router-dom';
 //import resultContext from '../../context/results/ResultContext'
 
 export default function ResultSection() {
+
+    const navigate = useNavigate();
+    useEffect(()=>{
+        if(localStorage.getItem('token')){
+            //fetchUserinfo();
+        }else{
+            navigate('/login');
+        }
+    },[]);
 
     const resultsInitial=[
     {
