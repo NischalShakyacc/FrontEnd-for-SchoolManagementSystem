@@ -1,5 +1,5 @@
 import Navbar from "./Components/Navbar";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Route,Routes } from "react-router";
 import Home from "./Routes/Home";
 import Contact from "./Routes/Contact";
@@ -14,13 +14,27 @@ import TeacherList from "./Routes/Admin/TeacherList";
 import Classroom from "./Routes/Admin/Classroom";
 import NoticeState from "./context/notices/NoticeState";
 import NewAccount from "./Routes/Admin/NewAccount.js"
+import UserState from "./context/user/UserState";
+
 
 function App() {
+  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(()=>{
+    if(localStorage.getItem('token')){
+      setIsLoggedIn(true);
+    }
+  },[localStorage.getItem('token')])
+    
+  
+
   return (
     <div className="App">
+    <UserState>
       <NoticeState>
         <Navbar/>
-        <SideNavbar/>
+        {isLoggedIn && <SideNavbar/>}
         <div className="containerApp">
           <Routes>
             <Route element={<NewAccount/>} exact path='/newaccount' />
@@ -39,6 +53,7 @@ function App() {
           </Routes>
         </div>
       </NoticeState>
+      </UserState>
     </div>
   );
 }

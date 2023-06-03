@@ -21,7 +21,7 @@ const NoticeState = (props) =>{
         const response = await fetch(`${host}/api/notice/fetchnotice`,{
             method: 'GET',
             headers :{
-                'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0M2RkZWM1NTU3MTE5MjZjOWFkYmUxIn0sImlhdCI6MTY4MjE2OTMyNH0.EMY8iRM2kOihqJjyyin9iVfi3ADGwxVxZpW3osAQxv4'
+                'auth-token' : localStorage.getItem('token')
             }
         });
         const json = await response.json()
@@ -36,7 +36,7 @@ const NoticeState = (props) =>{
             method: 'POST',
             headers :{
                 'Content-Type' : 'application/json',
-                'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0M2RkZWM1NTU3MTE5MjZjOWFkYmUxIn0sImlhdCI6MTY4MjE2OTMyNH0.EMY8iRM2kOihqJjyyin9iVfi3ADGwxVxZpW3osAQxv4'
+                'auth-token' : localStorage.getItem('token')
             },
             body: JSON.stringify({title,usernotice})
         });
@@ -62,18 +62,15 @@ const NoticeState = (props) =>{
             method: 'DELETE',
             headers :{
                 'Content-Type' : 'application/json',
-                'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ2MGQzZTNiNmExNjhmYWY1YjFkMWM4In0sImlhdCI6MTY4NDA3MDA0OH0.BdTy9m9wj4ro9fjPMI13jzqKeQQO_EwtrpXnLKDGTXQ'
+                'auth-token' : localStorage.getItem('token')
             }
         });
-        const json =await response.json();
-        
-        if(json){
-            window.location.reload()
-        }
-
+        const json = await response.json();
+        console.log(json)
         //deleting
-        const newNotices = noticeInfo.filter((notice)=>{return notice._id !== id})
+        let newNotices = notices.filter((notice)=>{return notice._id !== id})
         setNotices(newNotices)
+
     }
 
     //Update a notice
@@ -83,7 +80,7 @@ const NoticeState = (props) =>{
             method: 'PUT',
             headers :{
                 'Content-Type' : 'application/json',
-                'auth-token' : 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjQ0M2RkZWM1NTU3MTE5MjZjOWFkYmUxIn0sImlhdCI6MTY4MjE2OTMyNH0.EMY8iRM2kOihqJjyyin9iVfi3ADGwxVxZpW3osAQxv4'
+                'auth-token' : localStorage.getItem('token')
             },
             body: JSON.stringify({title, usernotice})
         });

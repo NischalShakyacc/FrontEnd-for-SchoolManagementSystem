@@ -1,7 +1,8 @@
 import React, { useContext, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import NoticeContext from "../../context/notices/NoticeContext"
+import NoticeContext from "../../context/notices/NoticeContext";
+import AlertMessage from '../AlertMessage';
 
 export default function AddNote() {
     const context = useContext(NoticeContext);
@@ -16,9 +17,13 @@ export default function AddNote() {
     const onchange = (e)=>{
         setNotice({...notice,[e.target.name]:e.target.value})
     }
+
+    const [showAlert,setShowAlert] = useState(false);
     const handleAdd = (e) =>{
         e.preventDefault();
-        addNotice(notice.title, notice.usernotice)
+        addNotice(notice.title, notice.usernotice);
+        setShowAlert(true);
+
     }
 
     return (
@@ -27,7 +32,7 @@ export default function AddNote() {
         <Form onSubmit={handleAdd}>
             <Form.Group className="mb-3">
                 <Form.Label>Title</Form.Label>
-                <Form.Control type="text" placeholder="Enter Notice Title" onChange={onchange} name='title' minLength={10}  />
+                <Form.Control type="text" placeholder="Enter Notice Title" onChange={onchange} name='title' minLength={10} required />
                 <Form.Text className="text-muted">
                 Title must be longer than 10 letters.
                 </Form.Text>
@@ -35,7 +40,7 @@ export default function AddNote() {
 
             <Form.Group className="mb-3" >
                 <Form.Label>Notice</Form.Label>
-                <Form.Control type="text" placeholder="Enter Notice " onChange={onchange} name='usernotice'  minLength={10}  />
+                <Form.Control type="text" placeholder="Enter Notice " onChange={onchange} name='usernotice'  minLength={10} required />
                 <Form.Text className="text-muted">
                     Notice must be longer than 10 letters.
                 </Form.Text>
@@ -44,6 +49,7 @@ export default function AddNote() {
                 + Add Notice
             </Button>
         </Form>
+        {showAlert && <AlertMessage severe="success" timeout="3000" message="Notice Added Successfully!" />}
         </div>
         </>
     )

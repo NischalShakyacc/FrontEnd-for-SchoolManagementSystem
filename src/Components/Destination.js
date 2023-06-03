@@ -2,10 +2,10 @@ import React from 'react'
 import "./Styles/Destination.css"
 import DestinationData from './DestinationData'
 
-import img1 from '../images/scholar.jpg'
-import img2 from '../images/signup.jpg'
+import img1 from '../images/studey.avif'
+import img2 from '../images/classs.avif'
 
-import img3 from '../images/login.jpg'
+import img3 from '../images/colors.avif'
 import img4 from '../images/student.jpg'
 
 export default function Destination() {

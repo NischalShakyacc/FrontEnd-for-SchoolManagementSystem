@@ -25,17 +25,16 @@ export default function Footer() {
       <div className="bottom">
         <div>
             <h4>Project</h4>
-            <a href="/">Change Log</a>
             <a href="/">Status</a>
             <a href="/">Licensce</a>
             <a href="/">All Versions</a>
         </div>
         <div>
-            <h4>Project</h4>
-            <a href="/">Change Log</a>
-            <a href="/">Status</a>
-            <a href="/">License</a>
-            <a href="/">All Versions</a>
+            <h4>Nischal Shakya</h4>
+            <p style={{color:'white'}}>9861884348</p>
+            <p style={{color:'white'}}>nischalshakyacc@gmail.com</p>
+            <a href="https://www.facebook.com/NischalShakya8" target="_blank" rel="noopener noreferrer">Facebook</a>
+            <a href="https://www.instagram.com/nischal__lahcsin/" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
       </div>
     </div>

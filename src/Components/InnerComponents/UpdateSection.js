@@ -37,9 +37,6 @@ export default function UpdateSection(props) {
 
         updateNotice(notice.id, notice.etitle, notice.eusernotice)
         setShowAlert(true);
-        setTimeout(() => {
-            setShowAlert(false);
-        }, 3000);
     }
     //fucntions used
     const onchange = (e)=>{
@@ -85,7 +82,7 @@ export default function UpdateSection(props) {
             </Modal.Footer>
             </Form>
         </Modal>
-        {showAlert && <AlertMessage severe="success" timeout="3000" message="Item updated successfully!" />}
+        {showAlert && <AlertMessage severe="success" timeout="3000" message="Notice updated successfully!" />}
     </>
     );
 }
