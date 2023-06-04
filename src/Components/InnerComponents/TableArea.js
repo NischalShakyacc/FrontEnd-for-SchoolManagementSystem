@@ -64,8 +64,12 @@ export default function TableArea() {
         <DataGrid
             rows={info}
             columns={columns}
-            pageSize={10}
-            rowsPerPageOptions={[5]}
+            initialState={{
+            pagination: {
+                paginationModel: { page: 0, pageSize: 10 },
+            },
+            }}
+            pageSizeOptions={[5, 10, 50]}
         />
         </div>
     </>

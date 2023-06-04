@@ -17,28 +17,32 @@ export default function NoticeSection() {
     const [isadmin,setIsadmin] = useState(false);
 
     let navigate = useNavigate();
+
+    
     
     useEffect(()=>{
         if(localStorage.getItem('token')){
-
-            //fetchUserinfo();
-
-            fetchNotice();
-            
-
-            if(userinfo.usertype === 'Admin'){
-                console.log(" admin")
-                setIsadmin(true);
-            }else{
-                console.log("not admin")
-                console.log(userinfo.usertype)
-            }
-        }
-        else{
+            fetchUserinfo();
+        }else{
             navigate('/login');
         }
+    },[localStorage.getItem('token')]);
+
+            
+    useEffect(()=>{
+        if(localStorage.getItem('token')){
+            if(userinfo.usertype === 'Admin'){
+                setIsadmin(true);
+            }
+        }
+    },[localStorage.getItem('token'), fetchUserinfo])
+        
         // eslint-disable-next-line
-    },[])
+    
+
+    useEffect(()=>{
+        fetchNotice();
+    },[]);
 
     // State for alert
     const [showAlert, setShowAlert] = useState(false)

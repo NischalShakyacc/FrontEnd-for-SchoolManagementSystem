@@ -18,11 +18,11 @@ export default function AddNote() {
         setNotice({...notice,[e.target.name]:e.target.value})
     }
 
-    const [showAlert,setShowAlert] = useState(false);
+    const [showAdded,setShowAdded] = useState(false);
     const handleAdd = (e) =>{
         e.preventDefault();
         addNotice(notice.title, notice.usernotice);
-        setShowAlert(true);
+        setShowAdded(true);
 
     }
 
@@ -49,7 +49,7 @@ export default function AddNote() {
                 + Add Notice
             </Button>
         </Form>
-        {showAlert && <AlertMessage severe="success" timeout="3000" message="Notice Added Successfully!" />}
+        {showAdded && <AlertMessage severe="success" timeout="3000" message="Notice Added Successfully!" />}
         </div>
         </>
     )

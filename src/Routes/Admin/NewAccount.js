@@ -14,7 +14,6 @@ export default function NewAccount() {
         if(localStorage.getItem('token')){
             
             fetchUserinfo();
-            console.log("heres is userinfo" + userinfo.name)
             if(userinfo.usertype !== 'Admin'){
                 navigate('/profile');
             }

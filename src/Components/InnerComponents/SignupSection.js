@@ -17,16 +17,16 @@ export default function SignupSection() {
     password:'',
     cpassword:'',
     usertype: 'Student',
-    grade: '1'
+    grade: 'Toddler'
   });
   const onChange = (e) =>{
     setCredentials({...credentails,[e.target.name]:e.target.value})
   }
   const changeUser = (e) =>{
-    setCredentials({...credentails, 'usertype':e.target.value,'grade':e.target.value});
+    setCredentials({...credentails, 'usertype':e.target.value});
   }
   const changeGrade = (e) =>{
-    setCredentials({...credentails, 'usertype':e.target.value,'grade':e.target.value});
+    setCredentials({...credentails,'grade':e.target.value});
   }
   //To display Message 
   const [dismessage,setDismessage] = useState({
@@ -44,27 +44,33 @@ export default function SignupSection() {
     const {name,password, cpassword} = credentails ;
     if(name.length<4){
       setNamevalidate(true);
-      return
-    }
-
-    if(password !== cpassword){
+      setValidation(false);
+      
+    }else if(password !== cpassword){
       setPasswordvalidate(true);
-      return
+      setValidation(false);
+      console.log('nocorrect' + password+ 'asdasdsd' + cpassword)
+      
+    }else{
+      setValidation(true);
     }
-
-    setValidation(true);
-
   }
-
-
+  
   //Function to hadle sign up
   const handleSignup = async (e) =>{
     e.preventDefault();
+
+    setNamevalidate(false);
+    setPasswordvalidate(false);
+    setUservalidate(false);
+    setValidation(false);
+    
     validate();
 
     if(validation){
       try{
         const {name, username, password, usertype, grade} = credentails ;
+        
         const response = await fetch("http://localhost:5000/api/auth/createuser", {   
             method: "POST",
             headers: {
@@ -73,6 +79,13 @@ export default function SignupSection() {
             },
             body: JSON.stringify({name,username,password,usertype,grade})
           });
+          console.log('Grade is ' + grade);
+          console.log('Classroom is' + usertype)
+
+          if(!response){
+            console.log('Server Not responding');
+          }
+          console.log(JSON.stringify({name,username,password,usertype,grade}))
 
           
           const json = await response.json();
@@ -89,6 +102,8 @@ export default function SignupSection() {
         
       }
     }
+
+
 
     //for dsiaplay
   const inputs = [
@@ -178,9 +193,9 @@ export default function SignupSection() {
     {showAlert && <AlertMessage severe="success" timeout="3000" message="Account Created Successfully!" />}
 
     {namevalidate && <AlertMessage severe="error" timeout="3000" message="Please enter full name." />}
-    
 
     {passwordvalidate && <AlertMessage severe="error" timeout="3000" message="Password does not match." />}
+
     {uservalidate && <AlertMessage severe="error" timeout="3000" message="Username is used. Please try another Username." />}
     </div>
   )
