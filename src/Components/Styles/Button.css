@@ -24,3 +24,46 @@
 .sub-btn:hover::after, .sub-btn:hover::before {
     width: 100%;
 }
+
+.delete-button{
+    background-color: var(--clr--red);
+    border: none;
+}
+.delete-button:hover{
+    background-color: var(--clr--blue);
+}
+
+.action-button-add{
+    border: none;
+    color: white;
+    background-color: var(--clr--red);
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    padding: 0.5rem 1rem;
+    transition: 0.5s;
+}
+.action-button-add:hover{
+    background-color: var(--clr--blue);
+}
+.action-button-add > i{
+    padding-right: 0.5rem;
+}
+
+.action-button-view{
+    border: none;
+    color: white;
+    background-color: var(--clr--yellow);
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+    border-radius: 0.5rem;
+    color: var(--clr--black);
+    transition: 0.5s;
+}
+.action-button-view > i{
+    padding-right: 0.5rem;
+}
+
+.action-button-view:hover{
+    background-color: var(--clr--blue);
+    color: white;
+}

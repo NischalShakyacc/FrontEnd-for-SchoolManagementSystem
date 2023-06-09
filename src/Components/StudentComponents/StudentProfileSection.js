@@ -6,22 +6,16 @@ import Grid from '@mui/material/Grid';
 import '../Styles/ProfileSection.css';
 import UserContext from '../../context/user/UserContext'
 import { useNavigate } from 'react-router-dom';
-import UpdateProfile from './UpdateProfile';
-import ModalBox from './ModalBox';
+import UpdateProfileStd from './UpdateProfileStd';
+import StudentContext from '../../context/studentinfo/StudentContext';
 
 export default function ProfileSection() {
 
     let navigate = useNavigate();
     const context = useContext(UserContext);
-    const {userinfo,fetchUserinfo,updateTeacher} = context;
+    const {userinfo,fetchUserinfo} = context;
 
-    // useEffect(()=>{
-    //     if(localStorage.getItem('token')){
-    //         fetchUserinfo();
-    //     }else{
-    //         navigate('/login');
-    //     }
-    // },[]);
+    const {updateStudent} = useContext(StudentContext)
 
     useEffect(()=>{
         if(localStorage.getItem('token')){
@@ -29,7 +23,7 @@ export default function ProfileSection() {
         }else{
             navigate('/login');
         }
-    },[userinfo,updateTeacher]);
+    },[userinfo, updateStudent]);
     
     
     const Item = styled(Paper)(({ theme }) => ({
@@ -45,27 +39,9 @@ export default function ProfileSection() {
         <div className='prf-image'>
         </div>
         
-        <UpdateProfile 
+        <UpdateProfileStd
             userid = {userinfo._id}
-            /*
-            userName = {userinfo.name}
-            userPhone = {userinfo.phone}
-            userDob = {userinfo.dob}
-            userAddress = {userinfo.address}
-            userGrade = {userinfo.grade}
-            userGender = {userinfo.gender}
-            */
         />
-        <div>
-            <ModalBox
-            text = "Delete Profile"
-            heading = "Delete Profile ?"
-            question = "Are you sure you want to delete your profile?"
-            action = "Delete"
-            todo = 'delProfile'
-            userid = {userinfo._id}
-            />
-        </div>
         
         <Box sx={{ flexGrow: 2 }}>
             <Grid container spacing={2}>
@@ -91,6 +67,15 @@ export default function ProfileSection() {
                         <Item  >
                             <span className='profile-label'>Name: </span>
                             <span className='profile-field'>{userinfo.name}</span>
+                        </Item>
+                    </div>
+                </Grid>
+
+                <Grid item xs={4}  md={3}>
+                    <div className='profile-card'>
+                        <Item  >
+                            <span className='profile-label'>Grade: </span>
+                            <span className='profile-field'>{userinfo.grade}</span>
                         </Item>
                     </div>
                 </Grid>
@@ -131,14 +116,52 @@ export default function ProfileSection() {
                     </div>
                 </Grid>
 
-                <Grid item xs={4}  md={3}>
+                <Grid item xs={6}  md={4}>
                     <div className='profile-card'>
                         <Item  >
-                            <span className='profile-label'>Grade: </span>
-                            <span className='profile-field'>{userinfo.grade}</span>
+                            <span className='profile-label'>House: </span>
+                            <span className='profile-field'>{userinfo.house}</span>
                         </Item>
                     </div>
                 </Grid>
+
+                <Grid item xs={6}  md={4}>
+                    <div className='profile-card'>
+                        <Item  >
+                            <span className='profile-label'>Father's Name: </span>
+                            <span className='profile-field'>{userinfo.fathername}</span>
+                        </Item>
+                    </div>
+                </Grid>
+
+                <Grid item xs={6}  md={4}>
+                    <div className='profile-card'>
+                        <Item  >
+                            <span className='profile-label'>Father's Number: </span>
+                            <span className='profile-field'>{userinfo.fatherphone}</span>
+                        </Item>
+                    </div>
+                </Grid>
+
+                <Grid item xs={6}  md={4}>
+                    <div className='profile-card'>
+                        <Item  >
+                            <span className='profile-label'>Mother's Name: </span>
+                            <span className='profile-field'>{userinfo.mothername}</span>
+                        </Item>
+                    </div>
+                </Grid>
+
+                <Grid item xs={6}  md={4}>
+                    <div className='profile-card'>
+                        <Item  >
+                            <span className='profile-label'>Mother's Number: </span>
+                            <span className='profile-field'>{userinfo.motherphone}</span>
+                        </Item>
+                    </div>
+                </Grid>
+
+                
                 
                     
             </Grid>

@@ -173,8 +173,8 @@ export default function SignupSection() {
           <p className='messageform'>For teachers please enter the highest grade you teach in.</p>
             <select name="grade" className='user-select' onChange={changeGrade}>
                 <option className='opt'>Toddler</option>
-                <option className='opt'>Nursury</option>
-                <option className='opt'>K.G.</option>
+                <option className='opt'>Nursery</option>
+                <option className='opt'>KG</option>
                 <option className='opt'>1</option>
                 <option className='opt'>2</option>
                 <option className='opt'>3</option>

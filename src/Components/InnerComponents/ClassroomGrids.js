@@ -16,6 +16,8 @@ const Item = styled(Paper)(({ theme }) => (
     ));
 
     export default function ClassroomGrids(props) {
+        
+    const link = props.linkto;
     return (
         <div style={{ width: '95%' }}>
             <Box sx={{ flexGrow: 1 }}>
@@ -29,10 +31,10 @@ const Item = styled(Paper)(({ theme }) => (
                 <Grid item xs={2} sm={4} md={4} key={index}>
                     <Item>
                         <Link 
-                        to={'/classroom/'.concat(value)}
+                        to={link.concat(value)}
                         >
                             <button className='grid-button' value={props.value}>
-                                {value}
+                                {"Grade ".concat(value)}
                             </button>
                         </Link>
                     </Item>

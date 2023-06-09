@@ -1,14 +1,16 @@
 import React,{ useContext, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-import UserContext from '../../context/user/UserContext';
-import { useNavigate } from 'react-router-dom';
+import StudentContext from '../../context/studentinfo/StudentContext';
+import '../Styles/Button.css'
+import AlertMessage from '../AlertMessage'
 
-function ModalBox(props) {
+export default function StduentModalBox(props) {
 
-    const context = useContext(UserContext);
-    const {deleteTeacher} = context;
-    const navigate = useNavigate();
+    const context = useContext(StudentContext);
+    const {deleteStudent} = context;
+
+    const [showAlert,setShowAlert] = useState(false);
 
     // for modal box
     const [show, setShow] = useState(false);
@@ -17,21 +19,18 @@ function ModalBox(props) {
 
     const handleDelete = () =>{
         setShow(false);
+        setShowAlert(false);
         if(props.todo === 'delProfile'){
-            
-            deleteTeacher(props.userid);
-            localStorage.removeItem('token');
-            navigate('/')
-            window.location.reload()
-
+            deleteStudent(props.userid);
+            setShowAlert(true)
+            //window.location.reload()
         }
     }
 
-    
     return (
     <>
-        <Button className='header-btn' onClick={handleShow}>
-        {props.text}
+        <Button className='delete-button' onClick={handleShow}>
+        <i className="fa-solid fa-trash"></i>
         </Button>
 
         <Modal show={show} onHide={handleClose}>
@@ -48,8 +47,7 @@ function ModalBox(props) {
             </Button>
             </Modal.Footer>
         </Modal>
+        {showAlert && <AlertMessage severe="success" timeout="3000" message="Student User Deleted Successfully!" />}
     </>
-    );
+  )
 }
-
-export default ModalBox;

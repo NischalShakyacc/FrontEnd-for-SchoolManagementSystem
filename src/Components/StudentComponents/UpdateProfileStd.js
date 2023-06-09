@@ -3,14 +3,16 @@ import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
 import AlertMessage from '../AlertMessage';
-import UserContext from '../../context/user/UserContext';
+import StudentContext from '../../context/studentinfo/StudentContext';
 
-export default function UpdateSection(props) {
+
+export default function UpdateProfileStd(props) {
 
     //usingContext
-    const context = useContext(UserContext);
-    const {updateTeacher} = context;
-
+    
+    const context = useContext(StudentContext);
+    const {updateStudent} = context;
+    
     //for alert
     const [showAlert, setShowAlert] = useState(false);
 
@@ -22,8 +24,13 @@ export default function UpdateSection(props) {
         ephone:'',
         edob: '',
         eaddress:'',
-        egrade: '',
-        egender: ''
+        egender: '',
+        efathername: '',
+        efatherphone: '',
+        emothername: '',
+        emotherphone: '',
+        ehouse: ''
+
     });
     
     // To open and close model box
@@ -41,18 +48,28 @@ export default function UpdateSection(props) {
             edob: userinfo.edob,
             eaddress: userinfo.eaddress,
             egrade: userinfo.egrade,
-            egender: userinfo.egender
+            egender: userinfo.egender,
+            efathername: userinfo.efathername,
+            efatherphone: userinfo.efatherphone,
+            emothername: userinfo.emothername,
+            emotherphone: userinfo.emotherphone,
+            ehouse: userinfo.ehouse
+
         });
         //console.log(userinfo);
 
-        updateTeacher(
+        updateStudent(
             props.userid,
             userinfo.ename,
-            userinfo.egender,
-            userinfo.ephone,
             userinfo.edob,
-            userinfo.eaddress, 
-            userinfo.egrade
+            userinfo.eaddress,
+            userinfo.egender,
+            userinfo.ephone, 
+            userinfo.ehouse, 
+            userinfo.efathername, 
+            userinfo.efatherphone, 
+            userinfo.emothername, 
+            userinfo.emotherphone, 
         );
         setShowAlert(true);
     }
@@ -60,9 +77,9 @@ export default function UpdateSection(props) {
     const onchange = (e)=>{
         setUserinfo({...userinfo,[e.target.name]:e.target.value})
     }
-
-    return (
-        <>
+  return (
+    <div>
+      <>
         <Button className='header-btn iconedit ' onClick={handleShow}>
             <i className="fa-solid fa-pen-to-square" ></i>Edit Profile
         </Button>
@@ -111,15 +128,34 @@ export default function UpdateSection(props) {
                         Address must be longer than 4 letters.
                     </Form.Text>
                 </Form.Group>
-                
-                <Form.Group className="mb-3" >
-                    <Form.Label>Grade</Form.Label>
-                    <Form.Control type="text"  required placeholder="Enter Grade" value={userinfo.egrade} onChange={onchange} name='egrade'/>
-                </Form.Group>
-                <Form.Text className="text-muted">
-                        Toddler / Nursery / K.G. / 1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9 / 10
-                    </Form.Text>
 
+                <Form.Group className="mb-3" >
+                    <Form.Label>House</Form.Label>
+                    <Form.Control type="text" required placeholder="Enter House" value={userinfo.ehouse} onChange={onchange} name='ehouse'  />
+                    <Form.Text className="text-muted">
+                        Matterhorn / Everest / Kanchanjunga / Fujiyama
+                    </Form.Text>
+                </Form.Group>
+
+                <Form.Group className="mb-3" >
+                    <Form.Label>Father's Name</Form.Label>
+                    <Form.Control type="text" required placeholder="Enter Father's Name" value={userinfo.efathername} onChange={onchange} name='efathername'  />
+                </Form.Group>
+
+                <Form.Group className="mb-3" >
+                    <Form.Label>Father's Phone Number</Form.Label>
+                    <Form.Control type="text" required placeholder="Enter Father's Phone Number" value={userinfo.efatherphone} onChange={onchange} name='efatherphone'  />
+                </Form.Group>
+
+                <Form.Group className="mb-3" >
+                    <Form.Label>Mother's Name</Form.Label>
+                    <Form.Control type="text" required placeholder="Enter Mother's Name" value={userinfo.emothername} onChange={onchange} name='emothername'  />
+                </Form.Group>
+
+                <Form.Group className="mb-3" >
+                    <Form.Label>Mother's Phone Number</Form.Label>
+                    <Form.Control type="text" required placeholder="Enter Mother's Phone Number" value={userinfo.emotherphone} onChange={onchange} name='emotherphone'  />
+                </Form.Group>
             </Modal.Body>
             <Modal.Footer>
             <Button className="additem-btn icondelete" onClick={handleClose}>
@@ -133,5 +169,6 @@ export default function UpdateSection(props) {
         </Modal>
         {showAlert && <AlertMessage severe="success" timeout="3000" message="Profile updated successfully!" />}
     </>
-    );
+    </div>
+  )
 }

@@ -15,7 +15,7 @@ export default function NewAccount() {
             
             fetchUserinfo();
             if(userinfo.usertype !== 'Admin'){
-                navigate('/profile');
+                navigate('/profilestudent');
             }
         }
     },[])

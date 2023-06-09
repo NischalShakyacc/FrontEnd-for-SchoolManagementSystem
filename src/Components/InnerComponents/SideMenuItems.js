@@ -42,7 +42,7 @@ export const SideNavItems ={
     Student :  [
         {
             title : "Profile",
-            url : "/profile",
+            url : "/profilestudent",
             cName : "side-nav-links",
             icon : 'fa-sharp fa-solid fa-user'
         },

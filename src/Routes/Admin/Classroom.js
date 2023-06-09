@@ -6,9 +6,10 @@ import HeaderComponent from '../../Components/InnerComponents/HeaderComponent'
     return (
         <div>
             <div id='innerHero'>
-                <HeaderComponent name='Classroom 🏛️' description='View all the notices here'/>
+                <HeaderComponent name='Classroom 🏛️' description='View all student details here'/>
                 <Grids 
-                classArray={['Toddler','Nursery','KG','Grade 1','Grade 1','Grade 2','Grade 3','Grade 4','Grade 5','Grade 6','Grade 7','Grade 8','Grade 9','Grade 10']} 
+                classArray={['Toddler','Nursery','KG','1','2','3',' 4','5','6','7','8','9','10']}
+                linkto = '/classroom/' 
                 />
             </div>
         </div>

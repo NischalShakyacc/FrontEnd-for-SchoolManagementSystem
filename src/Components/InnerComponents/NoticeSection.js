@@ -18,8 +18,6 @@ export default function NoticeSection() {
 
     let navigate = useNavigate();
 
-    
-    
     useEffect(()=>{
         if(localStorage.getItem('token')){
             fetchUserinfo();
@@ -36,8 +34,7 @@ export default function NoticeSection() {
             }
         }
     },[localStorage.getItem('token'), fetchUserinfo])
-        
-        // eslint-disable-next-line
+    // eslint-disable-next-line
     
 
     useEffect(()=>{

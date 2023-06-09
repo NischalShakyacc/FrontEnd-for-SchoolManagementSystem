@@ -48,6 +48,7 @@ export default function LoginForm() {
     const handleLogin = async (e) =>{
         e.preventDefault();
         //console.log(credentails);
+        setShowAlert(false)
         try{
             const response = await fetch("http://localhost:5000/api/auth/login",{
                 method: "POST",
@@ -65,7 +66,7 @@ export default function LoginForm() {
             if(json.success){
                 //redirect
                 localStorage.setItem('token',json.authToken);
-                navigation('/profile');
+                navigation('/');
                 window.location.reload(false)
 
             }else{

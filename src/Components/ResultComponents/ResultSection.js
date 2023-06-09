@@ -1,6 +1,5 @@
 import React,{useEffect} from 'react'
 import { useNavigate } from 'react-router-dom';
-//import resultContext from '../../context/results/ResultContext'
 
 export default function ResultSection() {
 

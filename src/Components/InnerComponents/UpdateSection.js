@@ -10,12 +10,14 @@ export default function UpdateSection(props) {
 
     //usingContext
     const context = useContext(NoticeContext);
+
     const {updateNotice} = context
 
     //for alert
     const [showAlert, setShowAlert] = useState(false);
 
     const [show, setShow] = useState(false);
+    
     const [notice,setNotice] = useState({
         etitle: props.noticeTitle,
         eusernotice: props.noticeUsernotice,

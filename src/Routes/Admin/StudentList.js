@@ -1,7 +1,7 @@
 import React from 'react'
-import TableArea from '../../Components/InnerComponents/TableArea'
 import HeaderComponent from '../../Components/InnerComponents/HeaderComponent'
 import { useParams } from 'react-router-dom'
+import StudentTableArea from '../../Components/StudentComponents/StudentTable'
 
 export default function StudentList() {
   const {classID} = useParams()
@@ -9,10 +9,10 @@ export default function StudentList() {
     <div>
       <div id='innerHero'>
         <HeaderComponent 
-        name={'Student List of '.concat(classID)}description='Name of all students in your class'
+        name={'Student List of '.concat(classID)} description='Details of all students in the class.'
         button="+ Add Account"
         />
-        <TableArea/>
+        <StudentTableArea/>
       </div>
     </div>
   )
