@@ -1,4 +1,4 @@
-    .sub-btn {
+.sub-btn {
     color: white;
     text-decoration: none;
     font-size: 25px;
@@ -42,6 +42,19 @@
     padding: 0.5rem 1rem;
     transition: 0.5s;
 }
+.action-button-add > a{
+    text-decoration: none;
+    color: white;
+}
+.action-button-view > a{
+    text-decoration: none;
+    color: var(--clr--black);
+}
+.action-button-view > a:hover{
+    color: var(--clr--white);
+}
+
+
 .action-button-add:hover{
     background-color: var(--clr--blue);
 }
@@ -57,7 +70,7 @@
     font-size: 0.9rem;
     border-radius: 0.5rem;
     color: var(--clr--black);
-    transition: 0.5s;
+    transition: 0.4s;
 }
 .action-button-view > i{
     padding-right: 0.5rem;
@@ -66,4 +79,69 @@
 .action-button-view:hover{
     background-color: var(--clr--blue);
     color: white;
+}
+
+.export-btn{
+    background-color: var(--clr--green);
+    padding: 0.5rem 0.6rem;
+    font-size: 0.9rem;
+    border-radius: 0.2rem;
+    color: var(--clr--black);
+    transition: 0.4s;
+    border: none;
+    margin:1rem
+}
+.export-btn > i{
+    padding-right: 0.5rem;
+}
+
+.export-btn:hover{
+    background-color: green;
+    color: white;
+}
+
+.accord{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.action-btn{
+    border: none;
+    color: white;
+    background-color: var(--clr--yellow);
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    border-radius: 0.5rem;
+    color: var(--clr--black);
+    transition: 0.4s;
+}
+.action-btn > i{
+    padding-right: 0.5rem;
+}
+.action-btn:hover{
+    background-color: var(--clr--green);
+    border-radius: 0;
+}
+
+.excelLabel{
+    display: block;
+    font-size: 1.25rem;
+}
+
+.dataPart{
+    width: 90%;
+}
+.enroll-del-btn{
+    background-color: var(--clr--red);
+    border: none;
+    font-size: 0.75rem;
+    transition: 0.3s; 
+}
+.enroll-del-btn i{
+    margin-right: 0.5rem
+}   
+.enroll-del-btn:hover{ 
+    background-color: var(--clr--blue);
+    border-radius: 0;
 }

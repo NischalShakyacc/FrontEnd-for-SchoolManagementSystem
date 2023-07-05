@@ -1,38 +1,41 @@
 import React, { useContext, useEffect } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
-import { NavLink, useParams } from 'react-router-dom';
+import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import StudentContext from '../../context/studentinfo/StudentContext';
 //import AddresultOpen from './AddresultOpen';
 import '../Styles/Button.css'
 
 
 export default function ResultTable() {
+
     const {classID} = useParams();
+    
+    let info = [];
 
     const context = useContext(StudentContext);
     const {studentinfo,getStudents} = context;
-
-    let info = [];
+    
+    const navigate = useNavigate();
     useEffect(()=>{
-        getStudents(classID);
-    },[])
+        if(!localStorage.getItem('token')){
+            navigate('/login');
+        }else{
+            
+        getStudents(classID);  
+        }
+    },[]);
 
     const columns = [
         
         { field: 'id', headerName: 'ID', width: 50 },
+        { field: 'username', headerName: 'Username', width: 100 },
         { field: 'name', headerName: 'Full Name', width: 150 },
         {
             field: "addresult",
             headerName: "Add Result",
             sortable: false,
             renderCell: ({ row }) =>
-            //Here was ADDresult open
-            /*
-                <AddresultOpen
-                userId = {row.idreal}
-                userName = {row.name}
-                /> ,*/
-                <button><NavLink to={"/addresult/"+ row.idreal+"/" +row.name}>Add result</NavLink></button>
+                <NavLink to={"/addresult/"+ row.idreal+"/" +row.name}><button className='action-button-add'>+ Add result </button></NavLink>
                 ,
             width: 160
         },
@@ -41,24 +44,25 @@ export default function ResultTable() {
             headerName: "View Results",
             sortable: false,
             renderCell: ({ row }) =>
-                <button className='action-button-view'>
-                <i className="fa-regular fa-eye"></i>
-                View Result
-                </button>,
+                <NavLink to={"/viewresult/"+ row.idreal+"/" +row.name}>  
+                    <button className='action-button-view'><i className="fa-regular fa-eye"></i>
+                    View Result
+                    </button>
+                </NavLink>
+                ,
             width: 160
         },
     ];
-
+    
     if(localStorage.getItem('token')){
         studentinfo.forEach((value,index)=>{
             info.push({
                 id: ++index, 
-                name: value.name, 
-                
-                
+                username: value.username,
+                name: value.name,       
                 addresult: '' ,
                 viewresult: '' ,
-                idreal : value._id,
+                idreal : value.username, //thischange was value._id
             })
         })
     }

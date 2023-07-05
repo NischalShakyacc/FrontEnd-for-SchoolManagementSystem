@@ -27,11 +27,23 @@ const NoticeState = (props) =>{
         const json = await response.json()
         setNotices(json)
     }
-
-
+    
+    const addNotice = (title,usernotice) =>{
+        const addedNotice = {
+            "_id": '6666asdasd',
+            "title": title,
+            "usernotice": usernotice,
+            "date": Date.now(),
+            "__v": 0
+        }
+        setNotices(notices.concat(addedNotice))
+    }
     //Add a notice
+    /*
     const addNotice = async (title,usernotice) =>{
         //API call
+        
+        
         const response = await fetch(`${host}/api/notice/addnotice/`,{
             method: 'POST',
             headers :{
@@ -42,18 +54,34 @@ const NoticeState = (props) =>{
         });
         
         const json = await response.json();
-        //console.log(json)
+        
+        if(json.success){
+            //send mail
+            
+            const config = {
+                SecureToken : "7bfe5e2e-86df-4190-9d57-d0ac78a325cb",
+                To : '019bim027@sxc.edu.np',
+                From : "nischalshakyacc@gmail.com",
+                Subject : `Notice From Delight School: ${title}`,
+                Body : usernotice
+            }
+            if(window.Email){
+                window.Email.send(config).then(()=> alert("Email Sent"))
+            }
+        }
 
         //adding note
         const addedNotice = {
-            "_id": json._id,
+            "_id": json.savedNotice._id,
             "title": title,
             "usernotice": usernotice,
-            "date": "2023-05-12T06:20:03.753Z",
+            "date": json.savedNotice.date,
             "__v": 0
         }
         setNotices(notices.concat(addedNotice))
-    }
+        
+        return (json)
+    }*/
 
     //Delete a notice gadbad
     const deleteNotice = async (id) =>{
@@ -86,7 +114,21 @@ const NoticeState = (props) =>{
             body: JSON.stringify({title, usernotice})
         });
         const json = await response.json();
-        console.log(json)
+
+        if(json.success){
+            //send mail
+            console.log("Maile sent")
+            const config = {
+                SecureToken : "7bfe5e2e-86df-4190-9d57-d0ac78a325cb",
+                To : '019bim027@sxc.edu.np',
+                From : "nischalshakyacc@gmail.com",
+                Subject : `Updated Notice From Delight School: ${title}`,
+                Body : usernotice
+            }
+            if(window.Email){
+                window.Email.send(config).then(()=> alert("Email Sent"))
+            }
+        }
 
         let updatedNotice = JSON.parse(JSON.stringify(notices)) ;
         //updating

@@ -46,7 +46,9 @@ export default function StudentState(props) {
     
     const deleteStudent = async (id) =>{
         console.log("deleting id "+ id)
-        //Todo Api call
+
+        //done Api call
+
         const response = await fetch(`${host}/api/studentusers/deletestudent/${id}`,{
             method: 'DELETE',
             headers :{
@@ -93,28 +95,20 @@ export default function StudentState(props) {
         });
         const json = await response.json();
         console.log(json)
+    }
+
+    //Get all students list
+    const getStudentById = async (id) =>{
+        //API call
         
-        /*
-        let updatedStudent = JSON.parse(JSON.stringify(studentinfo)) ;
-        //updating
-        for(let index = 0;index<updatedStudent.length;index++){
-            const element = updatedStudent[index];
-            if(element._id === id){
-                updatedStudent[index].name = name;
-                updatedStudent[index].dob  = dob;
-                updatedStudent[index].address  = address;
-                updatedStudent[index].gender  = gender;
-                updatedStudent[index].phone  = phone;
-                updatedStudent[index].house  = house;
-                updatedStudent[index].fathername  = fathername;
-                updatedStudent[index].fatherphone  = fatherphone;
-                updatedStudent[index].mothername  = mothername;
-                updatedStudent[index].motherphone  = motherphone;
-                
+        const response = await fetch(`${host}/api/studentusers/getstudent/${id}`,{
+            method: 'GET',
+            headers :{
+                'auth-token' : localStorage.getItem('token')
             }
-        }
-        //setStudentinfo(updatedStudent)
-        */
+        });
+        const json = await response.json();
+        setStudentinfo(json);
     }
     
 
@@ -126,7 +120,8 @@ export default function StudentState(props) {
                     setStudentinfo,
                     getStudents,
                     updateStudent,
-                    deleteStudent
+                    deleteStudent,
+                    getStudentById
                 }
             }>
             {props.children}

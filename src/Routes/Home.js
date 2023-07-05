@@ -2,6 +2,8 @@ import React from 'react'
 import Destination from '../Components/Destination'
 import Footer from '../Components/Footer'
 import Hero from '../Components/Hero'
+import MapForSchool from '../Components/MapForSchool'
+
 
 export default function Home() {
   return (
@@ -17,6 +19,7 @@ export default function Home() {
         url="/enroll"
         heroText ="hero-text big"
       />
+      <MapForSchool/>
     <Destination />
     <Footer/>
     </>

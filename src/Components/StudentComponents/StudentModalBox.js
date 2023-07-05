@@ -49,5 +49,5 @@ export default function StduentModalBox(props) {
         </Modal>
         {showAlert && <AlertMessage severe="success" timeout="3000" message="Student User Deleted Successfully!" />}
     </>
-  )
+    )
 }

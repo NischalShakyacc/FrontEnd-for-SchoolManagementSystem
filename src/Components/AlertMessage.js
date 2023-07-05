@@ -9,9 +9,9 @@ export default function AlertMessage(props) {
     const timer = setTimeout(() => {
         setShowAlert(false);
         }, props.timeout);
-
+        
         return () => clearTimeout(timer);
-    }, [props.timeout]);
+    }, [props.timeout,props]);
 
     if (!showAlert) {
         return null;

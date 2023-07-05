@@ -4,7 +4,7 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import '../Styles/GeneralGridStyles.css'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
 const Item = styled(Paper)(({ theme }) => (
     {
@@ -16,6 +16,10 @@ const Item = styled(Paper)(({ theme }) => (
     ));
 
     export default function ClassroomGrids(props) {
+        const navigate = useNavigate();
+        if(!localStorage.getItem('token')){
+            navigate('/login')
+        }
         
     const link = props.linkto;
     return (

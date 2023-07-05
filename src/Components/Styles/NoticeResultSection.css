@@ -47,3 +47,8 @@
 
 }
 
+.noticeImage img {
+    margin-top: 2rem;
+    width: 100%;
+    max-width: 20rem;
+}

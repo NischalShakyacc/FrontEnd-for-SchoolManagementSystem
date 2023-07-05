@@ -1,10 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import HeaderComponent from '../InnerComponents/HeaderComponent'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import ResultTable from './ResultTable';
 
 export default function ResultList() {
-    const {classID} = useParams()
+  const {classID} = useParams();
+  const navigate = useNavigate();
+    useEffect(()=>{
+        if(!localStorage.getItem('token')){
+            navigate('/login');
+        }
+    },[]);
   return (
     <>
       <div id='innerHero'>

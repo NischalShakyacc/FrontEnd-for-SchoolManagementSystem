@@ -2,47 +2,212 @@ import React, { useState } from "react";
 import ResultContext from "./ResultContext";
 
 const ResultState = (props) =>{
-    
+    const host = "http://localhost:5000"
+
 const resultsInitial=[
     {
-    "_id": "64525a08dbb2891993671499",
-        "user": "6443ddec555711926c9adbe1",
-        "name": "title forxczxc result",
-        "userresult": "My rekjnkjsasdasdult Sucks",
-        "date": "2023-05-03T12:56:40.111Z",
-        "__v": 0
+    "_id": "6481b68ab89d9cbc921d30f3",
+    "user": "647cb6ce2cc7d31b3b0c9fbc",
+    "resulttitle": "Mid Term Result",
+    "remarks": " mid term result Keep UpKeep UpKeep UpKeep UpKeep UpKeep UpKeep UpKeep UpKeep UpKeep UpKeep UpKeep UpKeep UpKeep Up",
+    "subject1": "English",
+    "subject2": "Science",
+    "subject3": "Scence2",
+    "subject4": "Maths",
+    "subject5": "EPH",
+    "subject6": "Social",
+    "subject7": "Nepali",
+    "subject8": "Nepali 2",
+    "mark1": "90",
+    "mark2": "40",
+    "mark3": "60",
+    "mark4": "70",
+    "mark5": "90",
+    "mark6": "80",
+    "mark7": "80",
+    "mark8": "80",
+    "total": "750",
+    "percentage": "99",
+    "date": "2023-06-08T11:07:54.420Z",
+    "__v": 0
     },
     {
-        "_id": "64586d3da9a8ea845f031a3a",
-        "user": "6443ddec555711926c9adbe1",
-        "name": "title forxczxc result",
-        "userresult": "New Result 123456789",
-        "date": "2023-05-08T03:32:13.926Z",
-        "__v": 0
-    },
-    {
-        "_id": "645871bb8d56a957db29f2c5",
-        "user": "6443ddec555711926c9adbe1",
-        "name": "title forxczxc result",
-        "userresult": "New Result 123456789",
-        "date": "2023-05-08T03:51:23.145Z",
-        "__v": 0
-    },
-    {
-        "_id": "645875883cdc4231d8be3ceb",
-        "user": "6443ddec555711926c9adbe1",
-        "name": "title forxczxc result",
-        "userresult": "New Result 123456789",
-        "date": "2023-05-08T04:07:36.930Z",
-        "__v": 0
-    }
+    "_id": "6481b6b3b89d9cbc921d30f8",
+    "user": "647cb6ce2cc7d31b3b0c9fbc",
+    "resulttitle": "Final Term Result",
+    "remarks": "Keep Up",
+    "subject1": "English",
+    "subject2": "Science",
+    "subject3": "Scence2",
+    "subject4": "Maths",
+    "subject5": "EPH",
+    "subject6": "Social",
+    "subject7": "Nepali",
+    "subject8": "Nepali 2",
+    "mark1": "90",
+    "mark2": "40",
+    "mark3": "60",
+    "mark4": "70",
+    "mark5": "90",
+    "mark6": "80",
+    "mark7": "80",
+    "mark8": "80",
+    "total": "750",
+    "percentage": "99",
+    "date": "2023-06-08T11:08:35.731Z",
+    "__v": 0
+  }
 ];
 
 const [results, setResults] = useState(resultsInitial);
-console.log(results)
+
+
+    // * Get all the results
+    const getResults = async (id) =>{
+        //API call
+        const response = await fetch(`${host}/api/result/fetchallresult/${id}`,{
+            method: 'GET',
+            headers :{
+                'auth-token' : localStorage.getItem('token')
+            }
+        });
+        const json = await response.json()
+        setResults(json)
+    }
+
+
+    // * Add results
+    const addResult = async (
+        user,
+        resulttitle, 
+        remarks, 
+        subject1,
+        subject2,
+        subject3,
+        subject4,
+        subject5,
+        subject6,
+        subject7,
+        subject8,
+        mark1,
+        mark2,
+        mark3,
+        mark4,
+        mark5,
+        mark6,
+        mark7,
+        mark8,
+        total, 
+        percentage) =>{
+        //setResults(results.push(result));
+        
+        const response = await fetch(`${host}/api/result/addresult`,{
+            method: 'POST',
+            headers :{
+                'Content-Type' : 'application/json',
+                'auth-token' : localStorage.getItem('token')
+            },
+            body: JSON.stringify({
+                user,
+                resulttitle, 
+                remarks, 
+                subject1,
+                subject2,
+                subject3,
+                subject4,
+                subject5,
+                subject6,
+                subject7,
+                subject8,
+                mark1,
+                mark2,
+                mark3,
+                mark4,
+                mark5,
+                mark6,
+                mark7,
+                mark8,
+                total, 
+                percentage})
+            });
+        
+        const json = await response.json();
+        
+        if(json.success){
+            //send mail
+            const config = {
+                SecureToken : "7bfe5e2e-86df-4190-9d57-d0ac78a325cb",
+                To : '019bim027@sxc.edu.np',
+                From : "nischalshakyacc@gmail.com",
+                Subject : `Delight School: Your result has been published.`,
+                Body : `Your result of ${resulttitle} has been published please check the school website to view the result.`
+            }
+            if(window.Email){
+                window.Email.send(config).then(()=> alert("Email Sent"))
+            }
+        }
+
+        //adding note
+        
+        const addedResult = {
+            "_id": json._id,
+            "user": user,
+            "resulttitle": resulttitle,
+            "remarks": remarks,
+            "subject1": subject1,
+            "subject2": subject2,
+            "subject3": subject3,
+            "subject4": subject4,
+            "subject5": subject5,
+            "subject6": subject6,
+            "subject7": subject7,
+            "subject8": subject8,
+            "mark1": mark1,
+            "mark2": mark2,
+            "mark3": mark3,
+            "mark4": mark4,
+            "mark5": mark5,
+            "mark6": mark6,
+            "mark7": mark7,
+            "mark8": mark8,
+            "total": total,
+            "percentage": percentage,
+            "date": json.date,
+            "__v": 0
+        }
+        setResults(results.concat(addedResult))
+    }
+
+    // * Add Delete
+    const deleteResult = async (id) =>{
+        console.log('delete result' + id);
+
+        //API call
+        const response = await fetch(`${host}/api/result/deleteresult/${id}`,{
+            method: 'DELETE',
+            headers :{
+                'Content-Type' : 'application/json',
+                'auth-token' : localStorage.getItem('token')
+            }
+        });
+        const json = await response.json();
+        console.log(json)
+
+        let newResults =  results.filter((results) => {return results._id !== id})
+        setResults(newResults);
+    }
+
 
     return(
-        <ResultContext.Provider value={{results, setResults}}>
+        <ResultContext.Provider value={
+            {
+                results, 
+                setResults,
+                addResult,
+                deleteResult,
+                getResults
+            }
+            }>
             {props.children}
         </ResultContext.Provider>
         

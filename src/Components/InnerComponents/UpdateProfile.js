@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -33,7 +33,6 @@ export default function UpdateSection(props) {
     //To update notice
     const handleUpdate = (e) =>{
         e.preventDefault();
-        setShowAlert(false);
         handleClose();
         setUserinfo({
             ename: userinfo.ename,
@@ -60,6 +59,15 @@ export default function UpdateSection(props) {
     const onchange = (e)=>{
         setUserinfo({...userinfo,[e.target.name]:e.target.value})
     }
+
+    //Setting to false again
+    useEffect(() => {
+        if (showAlert) {
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 2000);
+        }
+    }, [showAlert]);
 
     return (
         <>

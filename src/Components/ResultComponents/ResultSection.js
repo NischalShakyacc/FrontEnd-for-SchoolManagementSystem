@@ -1,86 +1,91 @@
-import React,{useEffect} from 'react'
-import { useNavigate } from 'react-router-dom';
+import React,{useContext, useEffect, useState} from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import ResultContext from '../../context/results/ResultContext';
+import Marksheet from './Marksheet';
+import UserContext from '../../context/user/UserContext';
+import '../Styles/Button.css';
 
 export default function ResultSection() {
+    const {userId} = useParams()
+    const context  = useContext(ResultContext);
+    const { results, deleteResult, getResults } = context;
 
+    const usercontext = useContext(UserContext);
+    const {userinfo, fetchUserinfo} = usercontext;
+    
     const navigate = useNavigate();
+    const [isadmin,setIsadmin] = useState(false);
+
+    useEffect(()=>{
+        if(!localStorage.getItem('token')){
+            navigate('/login');
+        }else{
+            fetchUserinfo();
+            
+        }
+    },[localStorage.getItem('token')]);
+
     useEffect(()=>{
         if(localStorage.getItem('token')){
-            //fetchUserinfo();
-        }else{
-            navigate('/login');
+            
+            if(userinfo.usertype === 'Admin'){
+                setIsadmin(true);
+            }
+            
         }
-    },[]);
+    },[localStorage.getItem('token'), fetchUserinfo])
 
-    const resultsInitial=[
-    {
-    "_id": "64525a08dbb2891993671499",
-        "user": "6443ddec555711926c9adbe1",
-        "name": "1st Term Result",
-        "userresult": "Your result here",
-        "date": "2023-05-03T12:56:40.111Z",
-        "__v": 0
-    },
-    {
-        "_id": "64586d3da9a8ea845f031a3a",
-        "user": "6443ddec555711926c9adbe1",
-        "name": "Mid Term Result",
-        "userresult": "New Result 123456789",
-        "date": "2023-05-08T03:32:13.926Z",
-        "__v": 0
-    },
-    {
-        "_id": "645871bb8d56a957db29f2c5",
-        "user": "6443ddec555711926c9adbe1",
-        "name": "Final Term Result",
-        "userresult": "New Result 123456789",
-        "date": "2023-05-08T03:51:23.145Z",
-        "__v": 0
-    },
-    {
-        "_id": "645875883cdc4231d8be3ceb",
-        "user": "6443ddec555711926c9adbe1",
-        "name": "Boards Examination Result",
-        "userresult": "New Result 123456789",
-        "date": "2023-05-08T04:07:36.930Z",
-        "__v": 0
-    }
-];
+    useEffect(()=>{
+        getResults(userId);
+    },[results]);
+
         return (
         <> 
-        {
-            resultsInitial.map((value,index)=>{
-            return(
-                
-                <div className="accordion" id="accordionExample" style={{width:'95%'}}>
-                <div className="accordion-item">
-                <h2 className="accordion-header" id={"heading".concat(index)}>
-                    <button className="accordion-button collapsed" 
-                    type="button" 
-                    data-bs-toggle="collapse" 
-                    data-bs-target={"#collapse".concat(index)}
-                    aria-expanded="false" 
-                    aria-controls={"collapse".concat(index)}>
-                    {value.name}
-                    <div 
-                    style={
-                        {paddingLeft:'1rem',fontSize:'0.7rem',color:'var(--clr--grey)'}}>
-                        {value.date}
+            {results.length === 0 ? "No Results to display. Add results.":""}
+            {
+                results.map((value,index)=>{
+                return(
+                    
+                    <div className="accordion" id="accordionExample" key={value._id}  style={{width:'95%'}}>
+                    <div className="accordion-item">
+                    <h2 className="accordion-header" id={"heading".concat(index)}>
+                        <button className="accordion-button collapsed" 
+                        type="button" 
+                        data-bs-toggle="collapse" 
+                        data-bs-target={"#collapse".concat(index)}
+                        aria-expanded="false" 
+                        aria-controls={"collapse".concat(index)}>
+                        {value.resulttitle}
+                        <div 
+                        style={
+                            {paddingLeft:'1rem',fontSize:'0.7rem',color:'var(--clr--grey)'}}>
+                            {new Date(value.date).toDateString()}
+                        </div>
+                        </button>
+                    </h2>
+                    <div className='actionitems'>
+                        {isadmin && <button className='actionicon icondelete' onClick={()=>{deleteResult(value._id)}}>
+                        <i className="fa-solid fa-trash"></i> Delete
+                        </button>}
+                        
+                        
                     </div>
-                    </button>
-                </h2>
-                    <div id={"collapse".concat(index)} className="accordion-collapse collapse" 
-                    aria-labelledby={"heading".concat(index)}
-                    data-bs-parent="#accordionExample">
-                    <div className="accordion-body">
-                            {value.userresult}
+                        <div id={"collapse".concat(index)} className="accordion-collapse collapse accord" 
+                        aria-labelledby={"heading".concat(index)}
+                        data-bs-parent="#accordionExample">
+                        <div className="accordion-body">
+                            <Marksheet 
+                                data  = {value}
+                                className = {index}
+                            />
+                        </div>
+                        </div>
                     </div>
                     </div>
-                </div>
-                </div>
-                )
-            })
-        }
+                    )
+                })
+            }
+        
         </>
     )
 }

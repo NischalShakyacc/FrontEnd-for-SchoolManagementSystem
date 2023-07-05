@@ -1,5 +1,4 @@
 import React from 'react'
-
 import ContactImg from "../images/contact.jpeg"
 import Hero from '../Components/Hero'
 import Footer from '../Components/Footer'

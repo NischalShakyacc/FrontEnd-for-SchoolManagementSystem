@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect,useState } from 'react';
 import { styled } from '@mui/material/styles';
 import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
@@ -8,8 +8,11 @@ import UserContext from '../../context/user/UserContext'
 import { useNavigate } from 'react-router-dom';
 import UpdateProfileStd from './UpdateProfileStd';
 import StudentContext from '../../context/studentinfo/StudentContext';
+import axios from 'axios';
 
 export default function ProfileSection() {
+
+    const imageurl = 'http://localhost:5000/studentimages/';
 
     let navigate = useNavigate();
     const context = useContext(UserContext);
@@ -34,14 +37,79 @@ export default function ProfileSection() {
         color: theme.palette.text.secondary,
     }));
 
+    /*Image handlers*/
+    const [showButton, setShowButton] = useState(false);
+    const [image,setImage] = useState({
+        profileImage: ''
+    })
+
+    const fileAdded =(e)=>{
+        setShowButton(true);
+        setImage({...image, profileImage: e.target.files[0]})
+    }
+
+    const config = {
+    headers: { 'auth-token' : localStorage.getItem('token') }
+    };
+
+    const imageUpload = (e)=>{
+        e.preventDefault();
+        const formData = new FormData();
+        formData.append('image',image.profileImage);
+
+        axios.put(`http://localhost:5000/api/studentusers/updatestudentimage/${userinfo._id}`,
+        formData,
+        config
+        ).then(res=>{
+        console.log(res);
+        })
+        .catch(err=>{
+        console.log(err);
+        })
+    }
+
     return (
     <div className='profile-section'>
-        <div className='prf-image'>
+        <div className='profile-image'>
+            {userinfo.image? 
+                <img 
+                className='profileImage' 
+                src={imageurl + userinfo.image} 
+                alt='Profile' 
+                />:
+                <img 
+                    className='profileImage' 
+                    src={imageurl + 'std.jpg'} 
+                    alt='Profile' 
+                    />
+                }
+            <span className='tospan'>
+
+            <div>
+            <UpdateProfileStd
+                userid = {userinfo._id}
+            />
+            </div>
+        </span>
         </div>
-        
-        <UpdateProfileStd
-            userid = {userinfo._id}
-        />
+
+            <div> 
+                <form onSubmit={imageUpload} className='upload-image' encType='multipart/form-data' >
+                    
+                <input 
+                type='file' 
+                name='profileImage' 
+                className='custom-file-input'
+                onChange={fileAdded}
+                accept='.png, .jpg, .jpeg'
+                />
+                <div>
+                    {showButton && 
+                        <input className='header-btn green-btn' type='submit' value='Save Image' />
+                    }
+                </div>
+                </form>
+            </div>
         
         <Box sx={{ flexGrow: 2 }}>
             <Grid container spacing={2}>
@@ -76,6 +144,15 @@ export default function ProfileSection() {
                         <Item  >
                             <span className='profile-label'>Grade: </span>
                             <span className='profile-field'>{userinfo.grade}</span>
+                        </Item>
+                    </div>
+                </Grid>
+
+                <Grid item xs={4}  md={6}>
+                    <div className='profile-card'>
+                        <Item  >
+                            <span className='profile-label'>Email: </span>
+                            <span className='profile-field'>{userinfo.email}</span>
                         </Item>
                     </div>
                 </Grid>
@@ -160,10 +237,6 @@ export default function ProfileSection() {
                         </Item>
                     </div>
                 </Grid>
-
-                
-                
-                    
             </Grid>
         </Box>
     </div>

@@ -50,3 +50,10 @@
     padding-bottom: 0.5rem;
 }
 
+#dob{
+    padding: 1rem;
+    border: 1px solid lightgray;
+    margin-left:1rem;
+    border-radius: 0.3rem;
+    background-color: var(--clr--white);
+}

@@ -1,0 +1,141 @@
+.marksheet{
+    border : 1px solid var(--clr--grey);
+    border-radius: 0.5rem;
+    padding: 1rem 2rem;
+    max-width: 38rem;
+}
+
+.topsectionmark{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+}
+
+.middlesection{
+    display: flex;
+    justify-content: center;
+}
+
+.markssection{
+    overflow-x: auto;
+    max-width: 50rem;
+}
+
+.titleresult{
+    font-size: 1.5rem;
+    font-family: var(--ff-secondary);
+    margin-top: 1rem;
+}
+
+.markssection td { 
+    border: 1px solid var(--clr--grey);
+    padding: 0.5rem;
+    font-family: var(--ff-secondary);
+}
+
+.schoolname{
+    font-size: 2rem;
+    margin-top: 1rem;
+    font-weight: bold;
+}
+
+.schoolinfo{
+    font-size: 0.75rem;
+    font-family: var(--ff-secondary);
+    margin-bottom: 1rem;
+}
+
+thead{
+    font-weight: bold;
+}
+
+.line{
+    width: 90%;
+    border-bottom: 1px solid var(--clr--grey);
+}
+
+/*
+.bottomsection {
+    max-width: 50rem;
+    display: flex;
+    justify-content: space-around;
+    align-items: baseline;
+    margin-top: 1rem;
+}
+
+.total,
+.remarksection {
+    
+}
+
+.labels {
+  font-weight: bold;
+}
+
+.datas{
+    display: inline-block;
+}
+*/
+
+.bottomsection {
+  display: flex;
+  justify-content: center;
+  margin: 1rem 0 ;
+}
+
+.total {
+    margin: 0 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.labels {
+  font-weight: bold;
+}
+
+.datas {
+  margin-top: 0.2rem;
+}
+
+.remarksection {
+    
+    border: 1px solid var(--clr--grey);
+    padding: 1rem;
+    width:15rem;
+    margin-left: 2rem;
+}
+
+.group{
+    border: 1px solid var(--clr--grey);
+    padding: 1rem;
+    width:8rem;
+}
+
+.studentinfo{
+    margin: 0 0.3rem ;
+    display: flex;
+    align-items: center;
+}
+
+.info{
+    margin: 0 1rem 0.5rem 1rem;
+    font-weight: bold;
+}
+
+@media screen and (max-width: 768px){
+    .marksheet{
+        max-width: 25rem;
+        padding: 0.5rem 0.75rem;
+        font-size: 0.6rem;
+    }    
+    .remarksection{
+        padding: 0.3rem;
+        width: 6rem;
+    }
+    .group{
+        padding: 0.3rem;
+        width:5rem;
+    }
+}

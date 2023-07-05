@@ -12,11 +12,12 @@ export default function NewAccount() {
 
     useEffect(()=>{
         if(localStorage.getItem('token')){
-            
             fetchUserinfo();
             if(userinfo.usertype !== 'Admin'){
                 navigate('/profilestudent');
             }
+        }else{
+            navigate('/login');
         }
     },[])
     

@@ -1,6 +1,6 @@
 
 
-#resultTitle{
+#resulttitle{
     padding: 0.5rem 1rem;
     width: 90%;
     display: block;
@@ -91,4 +91,11 @@
 
 .subjectgroup{
     display: inline-block;
+}
+
+.forgap{
+    margin-bottom: 1rem;
+    font-size: 0.8rem;
+    background: var(--clr--grey);
+    color: white;
 }

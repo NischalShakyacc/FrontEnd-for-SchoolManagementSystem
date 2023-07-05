@@ -17,7 +17,8 @@ export default function SignupSection() {
     password:'',
     cpassword:'',
     usertype: 'Student',
-    grade: 'Toddler'
+    grade: 'Toddler',
+    email: ''
   });
   const onChange = (e) =>{
     setCredentials({...credentails,[e.target.name]:e.target.value})
@@ -49,7 +50,6 @@ export default function SignupSection() {
     }else if(password !== cpassword){
       setPasswordvalidate(true);
       setValidation(false);
-      console.log('nocorrect' + password+ 'asdasdsd' + cpassword)
       
     }else{
       setValidation(true);
@@ -59,7 +59,7 @@ export default function SignupSection() {
   //Function to hadle sign up
   const handleSignup = async (e) =>{
     e.preventDefault();
-
+    setShowAlert(false)
     setNamevalidate(false);
     setPasswordvalidate(false);
     setUservalidate(false);
@@ -69,25 +69,22 @@ export default function SignupSection() {
 
     if(validation){
       try{
-        const {name, username, password, usertype, grade} = credentails ;
+        const {name, username, password, usertype, grade, email} = credentails ;
         
+        console.log(credentails);
         const response = await fetch("http://localhost:5000/api/auth/createuser", {   
             method: "POST",
             headers: {
               'Content-Type' : 'application/json',
               'auth-token' : localStorage.getItem('token')
             },
-            body: JSON.stringify({name,username,password,usertype,grade})
+            body: JSON.stringify({name,username,password,usertype,grade,email})
           });
-          console.log('Grade is ' + grade);
-          console.log('Classroom is' + usertype)
 
           if(!response){
             console.log('Server Not responding');
           }
-          console.log(JSON.stringify({name,username,password,usertype,grade}))
 
-          
           const json = await response.json();
           if(json.success){
             setShowAlert(true)
@@ -124,8 +121,17 @@ export default function SignupSection() {
             placeholder:'Username',
             label:'Username:',
             required:true,
-            minLength : 3,
+            minLength : 5,
             message : 'Username Must be Unique.'
+        },
+        {
+            id:5,
+            name:'email',
+            type:'email',
+            placeholder:'Email',
+            label:'Email:',
+            required:true,
+            message : 'Enter a Valid Email.'
         },
         {
             id:3,
@@ -134,7 +140,7 @@ export default function SignupSection() {
             placeholder:'Password',
             label:'Password:',
             required:true,
-            minLength : 3
+            minLength : 5
         },
         {
             id:4,

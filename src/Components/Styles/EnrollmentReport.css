@@ -1,0 +1,158 @@
+.report{
+    border: 1px solid var(--clr--grey);
+    border-radius: 0.5rem;
+    
+    max-width: 40rem;
+}
+
+.topsection{
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+    
+}
+.logoreport img {
+    height: 4rem;
+}
+.logotext{
+    font-size: 0.8rem;
+}
+
+.top-mid{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.schoolTitle{
+    color: var(--clr--blue);
+    font-size: 2rem;
+    margin-top: 1rem;
+}
+
+.schoolInfo{
+    font-size: 1rem;
+}
+
+.ppphoto{
+    border: 1px solid black;
+    width: 5rem;
+    height: 6rem;
+}
+.liner{
+    border-bottom: 1px solid var(--clr--grey);
+    width: 90%;
+    margin: auto;
+}
+
+.datasection{
+    font-family: var(--ff-secondary);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.reporthead{
+    color: var(--clr--blue);
+    font-size: 1.25rem;
+    background-color: var(--clr--bluelight);
+    width: 90%;
+    padding: 0.4rem  ;
+}
+
+.infosection{
+    overflow-x: auto;
+    max-width: 60rem;
+    margin: 0.5rem 1.6rem;
+    font-size: 0.8rem;
+    margin-bottom: 1rem;
+}
+
+.infosection td { 
+    border: 0.5px solid white;
+    padding: 0.2rem 0.65rem;
+    font-family: var(--ff-secondary);
+}
+
+.tableLabel{
+    background-color: white; 
+}
+
+.tableData{
+    font-weight: bold;
+    background-color: var(--clr--white)
+}
+.disclaimer{
+    width: 90%;
+    font-size: 0.75rem;
+}
+
+.bottomsection{
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.signatures{
+    font-size: .8rem;
+    margin-top: 1rem;
+}
+.signature{
+    font-size: .8rem;
+}
+
+.lines{
+    border-bottom: 1px solid var(--clr--grey);
+    width: 110%;
+    margin: auto;
+}
+
+
+@media screen and (max-width:700px) {
+    .report{
+        font-size: 0.5rem;
+        
+    }
+    .logoreport img {
+    height: 3rem;
+    }
+
+    .logotext{
+        font-size: 0.6rem;
+    }
+    .schoolTitle{
+    font-size: 1.2rem;
+    margin-top: 1rem;
+    }
+
+    .schoolInfo{
+        font-size: 0.8rem;
+    }
+
+    .ppphoto{
+        width: 3rem;
+        height: 3.5rem;
+    }
+    .reporthead{
+        font-size: 0.8rem;
+    }
+    .tableLabel{
+        font-size: 0.6rem;
+    }
+    .tableData{
+        font-size: 0.6rem;
+    }
+
+    .infosection td { 
+        padding: 0.1rem 0.3rem;
+    }
+
+    .disclaimer{
+        font-size: 0.6rem;
+    }
+    .signatures{
+        font-size: 0.6rem;
+    }
+    .signature{
+        font-size: 0.6rem;
+    }
+}

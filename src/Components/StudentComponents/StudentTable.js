@@ -1,12 +1,13 @@
 import React, { useContext, useEffect } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import StudentContext from '../../context/studentinfo/StudentContext';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import StudentModalBox from './StudentModalBox';
 
 export default function StudentTable() {
 
     const {classID} = useParams();
+    const navigate = useNavigate();
 
     const context  = useContext(StudentContext);
     const {studentinfo,getStudents} = context;
@@ -14,7 +15,11 @@ export default function StudentTable() {
     let info = [];
 
     useEffect(()=>{
-        getStudents(classID);
+        if(localStorage.getItem('token')){  
+            getStudents(classID);
+        }else{
+            navigate('/login');
+        }
     },[])
 
     //columns
@@ -34,6 +39,7 @@ export default function StudentTable() {
             width: 70
     },
     { field: 'id', headerName: 'ID', width: 50 },
+    { field: 'username', headerName: 'Username', width: 100 },
 
     { field: 'name', headerName: 'Full Name', width: 150,},
     {
@@ -86,6 +92,7 @@ export default function StudentTable() {
             info.push({
                 delete: 'Del' ,
                 id: ++index, 
+                username: value.username, 
                 name: value.name, 
                 gender: value.gender, 
                 phone: value.phone, 

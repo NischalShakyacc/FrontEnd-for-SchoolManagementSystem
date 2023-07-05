@@ -42,10 +42,21 @@ export default function NoticeSection() {
     },[]);
 
     // State for alert
-    const [showAlert, setShowAlert] = useState(false)
+    const [showDelAlert, setShowDelAlert] = useState(false);
+    
     const alertDelete = () =>{
-        setShowAlert(true);
+        setShowDelAlert(true);
     }
+    
+    //Setting to false again
+    useEffect(() => {
+        if (showDelAlert) {
+            setTimeout(() => {
+                setShowDelAlert(false);
+            }, 1000);
+        }
+    }, [showDelAlert]);
+
         return (
         <> 
         {isadmin && <AddNote/>}
@@ -82,11 +93,21 @@ export default function NoticeSection() {
                     aria-labelledby={"heading".concat(index)}
                     data-bs-parent="#accordionExample">
                         <div className="accordion-body">
-                            {value.usernotice}
+                            <div className='noticeText'>
+                                {value.usernotice}
+                            </div>
+                            <div style={{marginTop: '0.75rem'}} className='line'></div>
+                            <div className='noticeImage'>
+                            {value.attachments && 
+                                <img 
+                                src={`http://localhost:5000/images/${value.attachments}`} 
+                                alt='noticeImage' 
+                                />}
+                            </div>
                         </div>
                     </div>
                 </div>
-                {showAlert && <AlertMessage severe="warning" timeout="3000" message="Notice Deleted successfully!" />}
+                {showDelAlert && <AlertMessage severe="warning" timeout="2000" message="Notice Deleted successfully!" />}
                 </div>
                 )
             })

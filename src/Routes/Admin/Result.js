@@ -1,9 +1,17 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import HeaderComponent from '../../Components/InnerComponents/HeaderComponent'
 
 import ClassroomGrids from '../../Components/InnerComponents/ClassroomGrids'
+import { useNavigate } from 'react-router-dom';
 
 export default function Result() {
+
+  const navigate = useNavigate()
+    useEffect(()=>{
+        if(!localStorage.getItem('token')){
+            navigate('/login')
+        }
+    },[]);
 
   return (
     <div>

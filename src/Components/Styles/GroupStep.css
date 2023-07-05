@@ -1,0 +1,103 @@
+/* 
+.steps{
+    display: flex;
+}
+.rstep1{
+    min-width: 25rem;
+    max-width: 35rem;
+}
+.step1{
+    min-width: 20rem;
+    max-width: 25rem;
+}
+.step2{
+    min-width: 20rem;
+    max-width: 24rem;
+}
+.step3{
+    min-width: 12rem;
+    max-width: 15rem;
+}
+.step4{
+    min-width: 12rem;
+    max-width: 15rem;
+}
+.steps {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.step:first-child {
+  margin-left:-2rem;  Align the first step element to the left 
+}
+.step {
+    flex-basis:40%; 
+    padding: 0.25rem ;
+    box-sizing: border-box;
+    text-align: center;
+}
+.step img{
+    width: 100%;
+    height: auto;
+}
+@media screen and (max-width: 900px) {
+    .step {
+        flex-basis: 50%; 
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .step {
+        flex-basis: 100%;
+    }
+} */
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-gap: 10px;
+  justify-items: center;
+}
+
+.step1 img {
+  max-width: 105%;
+  height: auto;
+}
+.step2 img {
+  max-width: 90%;
+  height: auto;
+}
+.step3 img {
+  max-width: 80%;
+  height: auto;
+}
+.step4 img {
+  max-width: 80%;
+  height: auto;
+}
+
+
+.rsteps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+  grid-gap: 10px;
+  justify-items: center;
+}
+
+
+.rstep1 img {
+  max-width: 100%;
+  height: auto;
+}
+.rstep2 img {
+  max-width: 80%;
+  height: auto;
+}
+.rstep3 img {
+  max-width: 70%;
+  height: auto;
+}
+.rstep4 img {
+  max-width: 70%;
+  height: auto;
+}
+

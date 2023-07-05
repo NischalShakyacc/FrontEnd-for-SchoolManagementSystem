@@ -53,7 +53,9 @@ export default function UpdateSection(props) {
 
         <Modal show={show} onHide={handleClose}>
             <Modal.Header closeButton>
-            <Modal.Title>Edit Notice 📝</Modal.Title>
+            <Modal.Title>Edit Notice 
+            <span role="img" aria-label="notice">📝</span> 
+            </Modal.Title>
             </Modal.Header>
             <Form onSubmit={handleUpdate}>
             <Modal.Body>

@@ -1,8 +1,10 @@
-import React,{useContext, useEffect, useState} from 'react'
-import { NavLink } from 'react-router-dom'
-import { SideNavItems } from './SideMenuItems'
-import '../Styles/SideNavbar.css'
-import UserContext from '../../context/user/UserContext'
+import React,{useContext, useEffect, useState} from 'react';
+import { NavLink } from 'react-router-dom';
+import { SideNavItems } from './SideMenuItems';
+import '../Styles/SideNavbar.css';
+import UserContext from '../../context/user/UserContext';
+import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
+import Tooltip from 'react-bootstrap/Tooltip';
 
 export default function SideNavbar({children}) {
     const [isOpen, setIsOpen] = useState(false);
@@ -41,9 +43,12 @@ export default function SideNavbar({children}) {
                 style={
                     {display: isOpen ? 'block':'none',}
                 }>
-                Welcome
+                <span className='welcome'>Welcome,</span>
+                <span className='name-welcome'>
+                {userinfo.name}
+                </span>
                 </h1>
-                
+
                 <i className="fas fa-bars" 
                 onClick={toggleClass} 
                 style={
@@ -51,20 +56,27 @@ export default function SideNavbar({children}) {
                 }
                 }>
                 </i>
+            
             </section>
             {
                 isAdmin && (
                 SideNavItems.Admin.map((item,index)=>(
-                <NavLink to={item.url}  key={index} className={item.cName} >
-                    <i className={item.icon}></i>
-                    <div className='link-text' 
-                    style={
-                    {
-                        display: isOpen ? 'block':'none',
+                
+                <OverlayTrigger key={index} overlay={<Tooltip id="tooltip-right"> {item.title} </Tooltip>}>
+                
+                    <NavLink to={item.url}  key={index} className={item.cName} >
+                        <i className={item.icon}></i>
+                        <div className='link-text' 
+                        style={
+                        {
+                            display: isOpen ? 'block':'none',
+                        }
                     }
-                }
-                    >{item.title}</div>
-                </NavLink>
+                        >{item.title}</div>
+                    </NavLink>
+                
+                </OverlayTrigger>
+
                 ))
                 )
             }
@@ -88,12 +100,14 @@ export default function SideNavbar({children}) {
 
             {
                 !isAdmin && !isStudent && (
-                    <span>this</span>
+                    <span></span>
                 )
             }
             
         </div>
+        
         <div>{children}</div>
+        
     </div>
     )
 }
