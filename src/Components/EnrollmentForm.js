@@ -7,6 +7,7 @@ import AlertMessage from './AlertMessage'
 export default function EnrollmentForm() {
 
     const [showAlert, setShowAlert] = useState(false);
+    const [showNot, setShowNot] = useState(false);
     
     const [enrollment,setEnrollment] = useState({
         firstName: "",
@@ -48,7 +49,8 @@ export default function EnrollmentForm() {
         })
     }
 
-    const addEnroll = async (enrollment)=>{     
+    const addEnroll = async (enrollment)=>{    
+        
         const response = await fetch(`http://localhost:5000/api/enroll/addenroll`,{
             method: 'POST',
             headers :{
@@ -58,14 +60,18 @@ export default function EnrollmentForm() {
             });
         
         const json = await response.json();
-        console.log(json)
+        if(json.success){
+            
+            setShowAlert(true);
+        }else{
+            setShowNot(true);
+        }
     }
 
 
     const handleSubmit  = (e)=>{
         e.preventDefault();
         addEnroll(enrollment);
-        setShowAlert(true);
     }
 
     //Setting to false again
@@ -73,9 +79,17 @@ export default function EnrollmentForm() {
         if (showAlert) {
             setTimeout(() => {
                 setShowAlert(false);
-            }, 2000);
+            }, 2500);
         }
     }, [showAlert]);
+    //Setting to false again
+    useEffect(() => {
+        if (showNot) {
+            setTimeout(() => {
+                setShowNot(false);
+            }, 2500);
+        }
+    }, [showNot]);
 
     return (
         <div className="enroll-box">
@@ -92,10 +106,11 @@ export default function EnrollmentForm() {
                 <h2 className="section-inner">Name</h2>
 
                 <form onSubmit={handleSubmit}>
-                <TextField required id="outlined-required firstName" name="firstName" label="First Name" onChange={onChange} />
+                <TextField required id="outlined-required firstName" name="firstName" label="First Name" onChange={onChange} minLength={4} />
+
                 <TextField id="outlined-helperText middleName" label="Middle Name" name="middleName"  onChange={onChange} />
 
-                <TextField required id="outlined-required lastName" label="Last Name" name="lastName" onChange={onChange}  />
+                <TextField minLength={4} required id="outlined-required lastName" label="Last Name" name="lastName" onChange={onChange}  />
 
                 <h2 className="section-inner">Gender</h2>
                 <TextField
@@ -129,13 +144,16 @@ export default function EnrollmentForm() {
                 />
 
                 <TextField 
+                required
                 id="outlined-required city "
                 label="City" 
                 name="city"
                 onChange={onChange}
+                
                 />
 
                 <TextField 
+                required
                 id="outlined-required country" 
                 label="Country" 
                 name="country"
@@ -358,7 +376,8 @@ export default function EnrollmentForm() {
             </div>
             </Box>
         </div>
-        {showAlert && <AlertMessage severe="success" timeout="3000" message="Your enrollment form has been submitted." />}
+        {showAlert && <AlertMessage severe="success" timeout="2500" message="Your enrollment form has been submitted." />}
+        {showNot && <AlertMessage severe="info" timeout="2500" message="Your enrollment could not be submitted." />}
         </div>
     );
 }

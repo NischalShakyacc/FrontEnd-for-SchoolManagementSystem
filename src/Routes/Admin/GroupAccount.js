@@ -28,29 +28,30 @@ export default function GroupAccount() {
     const createAccount = async (row) =>{
         const convertedObj = lowerize(row);
         
-        try {
-            const response = await fetch("http://localhost:5000/api/auth/createuser", {   
-            method: "POST",
-            headers: {
-                'Content-Type' : 'application/json',
-                'auth-token' : localStorage.getItem('token')
-                },
-                body: JSON.stringify(convertedObj)
-            });
+            try {
+                const response = await fetch("http://localhost:5000/api/auth/createuser", {   
+                method: "POST",
+                headers: {
+                    'Content-Type' : 'application/json',
+                    'auth-token' : localStorage.getItem('token')
+                    },
+                    body: JSON.stringify(convertedObj)
+                });
 
-            if(!response){
-                console.log('Server Not responding');
-            }
+                if(!response){
+                    console.log('Server Not responding');
+                }
 
-            const json = await response.json();
-            if(json.success){
-                setCreated(true)
-            }else{
-                setNotcreate(true)
+                const json = await response.json();
+                if(json.success){
+                    setCreated(true)
+                }else{
+                    setNotcreate(true)
+                }
+            } catch (error) {
+                console.log(error.message)
             }
-        } catch (error) {
-            console.log(error.message)
-        }
+        
     }
     const [columns, setColumns] = useState([]);
     const [rows, setRows] = useState([]);
@@ -118,12 +119,12 @@ export default function GroupAccount() {
     if (created) {
         setTimeout(() => {
             setCreated(false);
-        }, 2000);
+        }, 2500);
     }
     if (notcreate) {
         setTimeout(() => {
             setNotcreate(false);
-        }, 2000);
+        }, 2500);
     }
     }, [created, notcreate]);
 
@@ -170,8 +171,8 @@ export default function GroupAccount() {
                 pageSizeOptions={[5, 10, 50]}
             />
         </div>
-        {created && <AlertMessage severe="success" timeout="2000" message="Account created successfully!"/>}
-        {notcreate && <AlertMessage severe="warning" timeout="2000" message="Check Credentials !"/>}
+        {created && <AlertMessage severe="success" timeout="2500" message="Account created successfully!"/>}
+        {notcreate && <AlertMessage severe="warning" timeout="2500" message="Check Credentials !"/>}
         </div>
     )
 }

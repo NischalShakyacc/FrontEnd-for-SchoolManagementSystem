@@ -2,7 +2,7 @@ import React from 'react'
 import "./Styles/Destination.css"
 import DestinationData from './DestinationData'
 
-import img1 from '../images/studey.avif'
+import img1 from '../images/colors.avif'
 import img2 from '../images/classs.avif'
 
 import img3 from '../images/colors.avif'
@@ -20,7 +20,7 @@ export default function Destination() {
 
         <DestinationData
         cName="desc-first"
-        heading="Rasimra Lama - Principal"
+        heading="Principal"
         text=" Our teachers and staff are the heart of our school community, and we are proud to have a team of dedicated and passionate educators. Check out our faculty page to learn more about our teachers' backgrounds, expertise, and interests."
         image1 = {img1}
         image2 = {img2}

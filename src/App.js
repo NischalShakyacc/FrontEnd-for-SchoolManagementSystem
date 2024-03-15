@@ -50,24 +50,19 @@ function App() {
           <Routes>
 
             <Route element={<NewAccount/>} exact path='/newaccount' />
-
             <Route element={<Profile/>} exact path='/profile' />
-
             <Route element={<Notice/>} exact path="/notice"/>
-
             <Route element={<Result/>} exact path="/result"/>
-            
             <Route element={<TeacherList/>} exact path="/teacherList" />
             <Route element={<EnrollmentReport/>} exact path="/enrollment" />
 
             <Route element={<Classroom/>} exact path="/classroom" />
             <Route element={<StudentList/>} path="/classroom/:classID"/>
             <Route element={<ResultList/>} path="/result/:classID"/>
-
             
             <Route element={<ProfileStudent/>} path="/profilestudent"/>  
             <Route element={<AddResult/>} path="/addresult/:userId/:name"/>  
-            <Route element={<ViewResult/>} path="/viewresult/:userId/:name"/>  
+            <Route element={<ViewResult/>} path="/result/:userId/:name"/>  
             <Route element={<StudentView/>} path="/viewresultstd"/>  
             <Route element={<GroupAccount/>} path="/addgroupaccount"/>  
             <Route element={<GroupResult/>} path="/addgroupresult"/>  

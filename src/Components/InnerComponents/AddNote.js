@@ -1,11 +1,19 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-//import NoticeContext from "../../context/notices/NoticeContext";
+import NoticeContext from "../../context/notices/NoticeContext";
 import AlertMessage from '../AlertMessage';
-import axios from 'axios'
+import axios from 'axios';
+import emailjs from '@emailjs/browser';
 
 export default function AddNote() {
+    //mail information
+    const serviceId = "service_8j7ajgu";
+    const templateId = "template_lks4yih";
+    const publicKey = "Lr2uqPaOU1GVb5ccJ";
+
+    const context = useContext(NoticeContext);
+    const {addNotice} = context;
 
     const [notice,setNotice] = useState(
         {
@@ -27,10 +35,10 @@ export default function AddNote() {
     };
 
     const [showAdded,setShowAdded] = useState(false);
+    const [showMail,setShowMail] = useState(false);
 
     const handleAdd = (e) =>{
         e.preventDefault();
-        //addNotice(notice.title, notice.usernotice);
         const formData = new FormData();
         formData.append('title', notice.title);
         formData.append('usernotice', notice.usernotice);
@@ -39,20 +47,31 @@ export default function AddNote() {
         axios.post('http://localhost:5000/api/notice/addnoticephoto',formData,
         config
         ).then(res=>{
-        console.log(res)
+        addNotice(notice.title, notice.usernotice);
             if(res){
             //send mail
             const config = {
+                from_name: 'Delight School',
+                from_email: '019bim027@sxc.edu.np',
+                to_name: 'Students',
+                message: notice.usernotice + '\n \n For more details check website.\nClick the link [http://localhost:3000/notice]',
+                /*
                 SecureToken : "7bfe5e2e-86df-4190-9d57-d0ac78a325cb",
                 To : '019bim027@sxc.edu.np',
                 From : "nischalshakyacc@gmail.com",
                 Subject : `Delight School: ${notice.title}`,
-                Body : notice.usernotice + 'For more details cgeck website.'
+                Body : notice.usernotice + '\n For more details check website.Click the link [http://localhost:3000/notice]'*/
             }
-            if(window.Email){
-                window.Email.send(config).then(()=> alert("Email Sent"))
-            }
+            emailjs.send(serviceId, templateId, config, publicKey)
+            .then((result) => {
+                console.log(result.text);
+                alert("Notice has been pulished.")
+            }, (error) => {
+                console.log(error.text);
+            });
+            
         }
+        
         })
         .catch(err=>{
         console.log(err);
@@ -66,9 +85,17 @@ export default function AddNote() {
         if (showAdded) {
             setTimeout(() => {
                 setShowAdded(false);
-            }, 1000);
+            }, 2500);
         }
     }, [showAdded]);
+
+    useEffect(() => {
+        if (showMail) {
+            setTimeout(() => {
+                setShowMail(false);
+            }, 5000);
+        }
+    }, [showMail]);
 
     return (
         <>
@@ -87,11 +114,11 @@ export default function AddNote() {
                 <textarea
                     className="form-control"
                     id="exampleFormControlTextarea1"
+                    minLength={10}  
                     rows="5"
                     placeholder="Enter Notice " 
                     onChange={onchange} 
                     name='usernotice'  
-                    minLength={10} 
                     value={notice.usernotice}
                     required
                 />
@@ -117,9 +144,9 @@ export default function AddNote() {
             </Button>
         </Form>
         </div>
-
-        {showAdded && <AlertMessage severe="success" timeout="3000" message="Notice Added Successfully!" />}
-
+        {showAdded && <AlertMessage severe="info" timeout="4000" message="Notice has been sent successfully via email." />}
+        
+        {showAdded && <AlertMessage severe="success" timeout="2500" message="Notice Added Successfully!" />}
         </>
     )
 }

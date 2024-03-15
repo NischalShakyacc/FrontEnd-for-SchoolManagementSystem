@@ -1,4 +1,4 @@
-import React,{ useContext, useState } from 'react';
+import React,{ useContext, useState,useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import StudentContext from '../../context/studentinfo/StudentContext';
@@ -11,6 +11,13 @@ export default function StduentModalBox(props) {
     const {deleteStudent} = context;
 
     const [showAlert,setShowAlert] = useState(false);
+    useEffect(() => {
+        if (showAlert) {
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 2500);
+        }
+    }, [showAlert]);
 
     // for modal box
     const [show, setShow] = useState(false);
@@ -47,7 +54,7 @@ export default function StduentModalBox(props) {
             </Button>
             </Modal.Footer>
         </Modal>
-        {showAlert && <AlertMessage severe="success" timeout="3000" message="Student User Deleted Successfully!" />}
+        {showAlert && <AlertMessage severe="success" timeout="2500" message="Student User Deleted Successfully!" />}
     </>
     )
 }

@@ -4,11 +4,12 @@ import ResultContext from '../../context/results/ResultContext';
 import Marksheet from './Marksheet';
 import UserContext from '../../context/user/UserContext';
 import '../Styles/Button.css';
+import ConfirmDeleteResult from './ConfirmDeleteResult';
 
 export default function ResultSection() {
     const {userId} = useParams()
     const context  = useContext(ResultContext);
-    const { results, deleteResult, getResults } = context;
+    const {results, getResults } = context;
 
     const usercontext = useContext(UserContext);
     const {userinfo, fetchUserinfo} = usercontext;
@@ -21,23 +22,20 @@ export default function ResultSection() {
             navigate('/login');
         }else{
             fetchUserinfo();
-            
         }
     },[localStorage.getItem('token')]);
 
     useEffect(()=>{
         if(localStorage.getItem('token')){
-            
             if(userinfo.usertype === 'Admin'){
                 setIsadmin(true);
             }
-            
         }
     },[localStorage.getItem('token'), fetchUserinfo])
 
     useEffect(()=>{
         getResults(userId);
-    },[results]);
+    },[]);
 
         return (
         <> 
@@ -63,14 +61,23 @@ export default function ResultSection() {
                         </div>
                         </button>
                     </h2>
+
                     <div className='actionitems'>
+                    {/* This is working instant delete result
                         {isadmin && <button className='actionicon icondelete' onClick={()=>{deleteResult(value._id)}}>
                         <i className="fa-solid fa-trash"></i> Delete
                         </button>}
                         
-                        
+                    */ }
+                    {
+                        isadmin &&
+                        <ConfirmDeleteResult
+                        resultId = {value._id}
+                        />
+                    }
                     </div>
-                        <div id={"collapse".concat(index)} className="accordion-collapse collapse accord" 
+                    
+                    <div id={"collapse".concat(index)} className="accordion-collapse collapse accord" 
                         aria-labelledby={"heading".concat(index)}
                         data-bs-parent="#accordionExample">
                         <div className="accordion-body">

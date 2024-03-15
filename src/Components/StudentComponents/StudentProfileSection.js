@@ -9,6 +9,7 @@ import { useNavigate } from 'react-router-dom';
 import UpdateProfileStd from './UpdateProfileStd';
 import StudentContext from '../../context/studentinfo/StudentContext';
 import axios from 'axios';
+import ChangePassword from '../InnerComponents/ChangePassword';
 
 export default function ProfileSection() {
 
@@ -18,6 +19,7 @@ export default function ProfileSection() {
     const context = useContext(UserContext);
     const {userinfo,fetchUserinfo} = context;
 
+    //* for update after updated profile
     const {updateStudent} = useContext(StudentContext)
 
     useEffect(()=>{
@@ -26,8 +28,7 @@ export default function ProfileSection() {
         }else{
             navigate('/login');
         }
-    },[userinfo, updateStudent]);
-    
+    },[updateStudent]);
     
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
@@ -62,6 +63,7 @@ export default function ProfileSection() {
         config
         ).then(res=>{
         console.log(res);
+        window.location.reload();
         })
         .catch(err=>{
         console.log(err);
@@ -86,9 +88,15 @@ export default function ProfileSection() {
             <span className='tospan'>
 
             <div>
-            <UpdateProfileStd
-                userid = {userinfo._id}
-            />
+                <UpdateProfileStd
+                    userid = {userinfo._id}
+                />
+            </div>
+
+            <div style={{marginLeft:'2rem'}}>
+                <ChangePassword 
+                    userid = {userinfo._id}
+                />
             </div>
         </span>
         </div>

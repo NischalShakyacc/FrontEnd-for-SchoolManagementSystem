@@ -1,59 +1,40 @@
-import React, { useEffect , useState} from 'react'
+import React, { useContext, useEffect , useState} from 'react'
 import HeaderComponent from './InnerComponents/HeaderComponent'
 import { useNavigate } from 'react-router-dom'
 import FilledEnrollment from './FilledEnrollment';
 import ConfirmDeleteEnroll from './ConfirmDeleteEnroll';
+import UserContext from '../context/user/UserContext';
 
 export default function EnrollmentReport() {
 
-    
     const navigate = useNavigate();
     const [enroll,setEnroll] = useState(
-        [{
-        _id:"1",
-        accessrequirements: "NO",
-        busaddress: "Yes",
-        city: "Lalitpur",
-        country: "Nepal",
-        date: "2023-06-06",
-        dob: "2023-06-06",
-        emergencyaddress: "98555",
-        emergencyname: "asdasd",
-        emergencyphone: "9999",
-        fathername: "Nabin",
-        fatherphone: "9841401174",
-        filler: "Nischal Shakya",
-        firstName: "nischal",
-        gender: "Male",
-        grade: "10",
-        guardianname: "Nabin",
-        guardianphone: "9841401174",
-        lastName: "Shakya",
-        middleName: "man ",
-        mothername: "Arina",
-        motherphone: "9849103495",
-        nation: "nepalese",
-        officename: "Silver",
-        officephone: "5534701",
-        prevschool: "delight",
-        prevschooladdress: "thasikhel",
-        prevschoolphone: "55348888",
-        relation: "Father",
-        streetAddress: "Gwarko",
-        wardno: "7"
-    }]
+        [{}]
     )
+    // To check if Admin or Not admin
+    const usercontext = useContext(UserContext);
+    const {userinfo, fetchUserinfo} = usercontext;
+
+    const [isadmin,setIsadmin] = useState(false);
 
     useEffect(() =>{
         if(!localStorage.getItem('token')){
             navigate('/login');
         }else{
-            fetchEnrolls();
+            fetchUserinfo();
         }
-    },[]);
+    },[userinfo.usertype, navigate]);
+
+    useEffect(()=>{
+        if(localStorage.getItem('token')){
+            if(userinfo.usertype === 'Admin'){
+                setIsadmin(true);
+                fetchEnrolls();
+            }
+        }
+    },[userinfo.usertype])
 
     const fetchEnrolls = async () => {
-
         const token = localStorage.getItem('token');
         const response = await fetch('http://localhost:5000/api/enroll/getenrolls', {
             method: 'GET',
@@ -68,17 +49,18 @@ export default function EnrollmentReport() {
     
     return (
         <div id='innerHero'>
+        {isadmin &&
+            <>
             <HeaderComponent
                 name='Admission  Report'
                 description='View all new Admission  forms here.'
             />
-
+            
             {enroll.length === 0 ? "No enrollments to display.":""}
             {
                 enroll.map((value,index)=>{
                 return(
-                    
-                    <div className="accordion" id="accordionExample" key={value._id}  style={{width:'95%'}}>
+                    <div className="accordion" id="accordionExample" key={index}  style={{width:'95%'}}>
                     <div className="accordion-item">
                     <h2 className="accordion-header" id={"heading".concat(index)}>
                         <button className="accordion-button collapsed" 
@@ -117,7 +99,8 @@ export default function EnrollmentReport() {
                     )
                 })
             }
-            
+            </>
+        }
         </div>
     )
 }

@@ -1,9 +1,7 @@
 import "./Styles/ContactForm.css"
 import React from 'react'
-
-  const validate = (e)=>{
-  e.preventDefault();
-  console.log("submitted")
+    const validate = (e)=>{
+    e.preventDefault();
   }
 export default function ContactForm(props) {
   return (

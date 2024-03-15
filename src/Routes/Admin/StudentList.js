@@ -17,7 +17,7 @@ export default function StudentList() {
     <div>
       <div id='innerHero'>
         <HeaderComponent 
-        name={'Student List of '.concat(classID)} description='Details of all students in the class.'
+        name={'Student List of Grade '.concat(classID)} description='Details of all students in the class.'
         button="+ Add Account"
         url="/newaccount"
         />

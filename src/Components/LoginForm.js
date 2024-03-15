@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useState,useEffect} from 'react'
 import "./Styles/LoginForm.css"
 import LoginInput from './LoginInput'
 import { useNavigate } from 'react-router-dom';
@@ -36,6 +36,13 @@ export default function LoginForm() {
 
     // State for alert
     const [showAlert, setShowAlert] = useState(false)
+     useEffect(() => {
+        if (showAlert) {
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 2500);
+        }
+    }, [showAlert]);
 
     const onChange = (e) =>{
         setCredentials({...credentails,[e.target.name]:e.target.value})
@@ -97,7 +104,7 @@ export default function LoginForm() {
                 </select>
                 <button type='submit'>Log In</button>
             </form>
-            {showAlert && <AlertMessage severe="error" timeout="3000" message="Invalid Login Information!" />}
+            {showAlert && <AlertMessage severe="error" timeout="2500" message="Invalid Login Information!" />}
     </div>
     )
 }

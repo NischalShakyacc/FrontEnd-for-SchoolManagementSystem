@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState,useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -9,15 +9,61 @@ import StudentContext from '../../context/studentinfo/StudentContext';
 export default function UpdateProfileStd(props) {
 
     //usingContext
-    
     const context = useContext(StudentContext);
     const {updateStudent} = context;
-    
+
     //for alert
-    const [showAlert, setShowAlert] = useState(false);
+    const [showGenderalert, setShowGenderalert] = useState(false);
+    const [showGradealert, setShowGradealert] = useState(false);
+    const [showHousealert, setShowHousealert] = useState(false);
+
+    //Setting to false again
+    useEffect(() => {
+        if (showGradealert) {
+            setTimeout(() => {
+                setShowGradealert(false);
+            }, 2500);
+        }
+    }, [showGradealert]);
+
+    useEffect(() => {
+        if (showGenderalert) {
+            setTimeout(() => {
+                setShowGenderalert(false);
+            }, 2500);
+        }
+    }, [showGenderalert]);
+
+    useEffect(() => {
+        if (showHousealert) {
+            setTimeout(() => {
+                setShowHousealert(false);
+            }, 2500);
+        }
+    }, [showHousealert]);
+
+    //Validation 
+    const validate = (gender, grade, house) => {
+        const genders = ['Male', 'Female', 'Other'];
+        const classes = ['Toddler','Nursery','KG','1','2','3','4','5','6','7','8','9','10'];
+        const houses = ['Yellow', 'Blue','Green','Red','Matterhorn','Everest','Kanchanjunga','Fujiyama'];
+
+        if(!genders.includes(gender)){
+            setShowGenderalert(true)
+            return false;
+        }
+        if(!classes.includes(grade)){
+            setShowGradealert(true);
+            return false;
+        }
+        if(!houses.includes(house)){
+            setShowGradealert(true);
+            return false;
+        }
+        return true;
+    }
 
     const [show, setShow] = useState(false);
-    
     const [userinfo,setUserinfo] = useState({
         eid: props.userid,
         ename: '',
@@ -29,8 +75,9 @@ export default function UpdateProfileStd(props) {
         efatherphone: '',
         emothername: '',
         emotherphone: '',
-        ehouse: ''
-
+        ehouse: '',
+        egrade: '',
+        eemail: ''
     });
     
     // To open and close model box
@@ -40,25 +87,27 @@ export default function UpdateProfileStd(props) {
     //To update notice
     const handleUpdate = (e) =>{
         e.preventDefault();
-        setShowAlert(false);
-        handleClose();
+
+        const validity = validate(userinfo.egender,userinfo.egrade,userinfo.ehouse);
+
         setUserinfo({
             ename: userinfo.ename,
             ephone: userinfo.ephone,
             edob: userinfo.edob,
             eaddress: userinfo.eaddress,
-            egrade: userinfo.egrade,
             egender: userinfo.egender,
             efathername: userinfo.efathername,
             efatherphone: userinfo.efatherphone,
             emothername: userinfo.emothername,
             emotherphone: userinfo.emotherphone,
-            ehouse: userinfo.ehouse
-
+            ehouse: userinfo.ehouse,
+            egrade: userinfo.egrade,
+            eemail: userinfo.eemail
         });
         //console.log(userinfo);
 
-        updateStudent(
+        if(validity){
+            updateStudent(
             props.userid,
             userinfo.ename,
             userinfo.edob,
@@ -70,16 +119,21 @@ export default function UpdateProfileStd(props) {
             userinfo.efatherphone, 
             userinfo.emothername, 
             userinfo.emotherphone, 
+            userinfo.eemail, 
+            userinfo.egrade 
         );
-        setShowAlert(true);
+        handleClose();
+        }
     }
+
     //fucntions used
     const onchange = (e)=>{
         setUserinfo({...userinfo,[e.target.name]:e.target.value})
     }
-  return (
+
+    return (
     <div>
-      <>
+        <>
         <Button className='header-btn iconedit ' onClick={handleShow}>
             <i className="fa-solid fa-pen-to-square" ></i>Edit Profile
         </Button>
@@ -109,6 +163,14 @@ export default function UpdateProfileStd(props) {
                 </Form.Group>
 
                 <Form.Group className="mb-3" >
+                    <Form.Label>Grade</Form.Label>
+                    <Form.Control type="text"  required placeholder="Enter Grade" value={userinfo.egrade} onChange={onchange} name='egrade'/>
+                </Form.Group>
+                <Form.Text className="text-muted">
+                        Toddler / Nursery / KG / 1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9 / 10
+                </Form.Text>
+
+                <Form.Group className="mb-3" >
                     <Form.Label>Phone Number</Form.Label>
                     <Form.Control type="text" minLength={10} required placeholder="Enter Phone Number" value={userinfo.ephone} onChange={onchange} name='ephone'  />
                     <Form.Text className="text-muted">
@@ -127,6 +189,11 @@ export default function UpdateProfileStd(props) {
                     <Form.Text className="text-muted">
                         Address must be longer than 4 letters.
                     </Form.Text>
+                </Form.Group>
+
+                <Form.Group className="mb-3" >
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email" required placeholder="Enter Email." value={userinfo.eemail} onChange={onchange} name='eemail'  />
                 </Form.Group>
 
                 <Form.Group className="mb-3" >
@@ -166,9 +233,12 @@ export default function UpdateProfileStd(props) {
             </Button>
             </Modal.Footer>
             </Form>
+
+            {showGenderalert && <AlertMessage severe="error" timeout="2500" message="Gender should be Male Female or Other" />}
+            {showGradealert && <AlertMessage severe="error" timeout="2500" message="Grade should be (Toddler / Nursery / KG / 1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9 / 10)" />}
+            {showHousealert && <AlertMessage severe="error" timeout="2500" message="Grade should be (House should be 'Yellow'/'Blue'/'Green'/'Red'/'Matterhorn'/'Everest'/'Kanchanjunga'/'Fujiyama'." />}
         </Modal>
-        {showAlert && <AlertMessage severe="success" timeout="3000" message="Profile updated successfully!" />}
     </>
     </div>
-  )
+    )
 }

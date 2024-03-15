@@ -15,7 +15,7 @@ export default function ResultList() {
     <>
       <div id='innerHero'>
         <HeaderComponent 
-        name={'Student and results List of '.concat(classID)} description='Result of all students in the class.'
+        name={'Student and Result List of '.concat(classID)} description='Result of all students in the class.'
         />
         <ResultTable/>
       </div>

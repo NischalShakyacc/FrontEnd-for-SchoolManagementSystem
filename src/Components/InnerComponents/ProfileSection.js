@@ -4,7 +4,8 @@ import Box from '@mui/material/Box';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import '../Styles/ProfileSection.css';
-import UserContext from '../../context/user/UserContext'
+import UserContext from '../../context/user/UserContext';
+import ChangePassword from './ChangePassword';
 import { useNavigate } from 'react-router-dom';
 import UpdateProfile from './UpdateProfile';
 import ModalBox from './ModalBox';
@@ -14,7 +15,7 @@ export default function ProfileSection() {
 
     let navigate = useNavigate();
     const context = useContext(UserContext);
-    const {userinfo,fetchUserinfo,updateTeacher} = context;
+    const {userinfo, fetchUserinfo} = context;
     const imageurl = 'http://localhost:5000/profileimages/';
 
     useEffect(()=>{
@@ -26,8 +27,8 @@ export default function ProfileSection() {
         }else{
             navigate('/login');
         }
-    },[userinfo, updateTeacher]);
-
+    },[]);
+    
     const Item = styled(Paper)(({ theme }) => ({
         backgroundColor: theme.palette.mode === 'dark' ? '#1A2027' : '#fff',
         ...theme.typography.body2,
@@ -61,6 +62,7 @@ export default function ProfileSection() {
         config
         ).then(res=>{
         console.log(res);
+        window.location.reload();
         })
         .catch(err=>{
         console.log(err);
@@ -101,6 +103,12 @@ export default function ProfileSection() {
             todo = 'delProfile'
             userid = {userinfo._id}
             />
+            </div>
+
+            <div>
+                <ChangePassword 
+                    userid = {userinfo._id}
+                />
             </div>
         </span>
         </div>

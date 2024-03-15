@@ -1,7 +1,14 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import ResultContext from "./ResultContext";
+import AlertMessage from "../../Components/AlertMessage";
+import emailjs from '@emailjs/browser'
 
 const ResultState = (props) =>{
+    //mail information
+    const serviceId = "service_8j7ajgu";
+    const templateId = "template_lks4yih";
+    const publicKey = "Lr2uqPaOU1GVb5ccJ";
+
     const host = "http://localhost:5000"
 
 const resultsInitial=[
@@ -56,7 +63,7 @@ const resultsInitial=[
     "percentage": "99",
     "date": "2023-06-08T11:08:35.731Z",
     "__v": 0
-  }
+    }
 ];
 
 const [results, setResults] = useState(resultsInitial);
@@ -75,7 +82,15 @@ const [results, setResults] = useState(resultsInitial);
         setResults(json)
     }
 
-
+    // Alert handler for Result Mailing
+    const [resultmail, setResultmail] = useState(false);
+    useEffect(()=>{
+        if(resultmail){
+            setTimeout(()=>{
+                setResultmail(false)
+            },[4000])
+        }
+    },[resultmail])
     // * Add results
     const addResult = async (
         user,
@@ -136,15 +151,26 @@ const [results, setResults] = useState(resultsInitial);
         if(json.success){
             //send mail
             const config = {
+                from_name: 'Delight School',
+                from_email: '019bim027@sxc.edu.np',
+                to_name: 'Students',
+                message: `Your result of ${resulttitle} has been published please check the school website to view the result.
+                \n `
+                /*
                 SecureToken : "7bfe5e2e-86df-4190-9d57-d0ac78a325cb",
                 To : '019bim027@sxc.edu.np',
                 From : "nischalshakyacc@gmail.com",
-                Subject : `Delight School: Your result has been published.`,
-                Body : `Your result of ${resulttitle} has been published please check the school website to view the result.`
+                Subject : `Delight School: ${notice.title}`,
+                Body : notice.usernotice + '\n For more details check website.Click the link [http://localhost:3000/notice]'*/
             }
-            if(window.Email){
-                window.Email.send(config).then(()=> alert("Email Sent"))
-            }
+            emailjs.send(serviceId, templateId, config, publicKey)
+            .then((result) => {
+                console.log(result.text);
+                alert("Result has been mailed.")
+            }, (error) => {
+                console.log(error.text);
+            });
+            
         }
 
         //adding note
@@ -179,9 +205,28 @@ const [results, setResults] = useState(resultsInitial);
     }
 
     // * Add Delete
-    const deleteResult = async (id) =>{
-        console.log('delete result' + id);
+    // Alerts
+    
+    const [showMessage,setShowMessage] = useState(false);
+    const [showErrorMessage,setErrorShowMessage] = useState(false);
 
+    //Reset Update Alerts
+    useEffect(() => {
+        if (showMessage) {
+            setTimeout(() => {
+                setShowMessage(false);
+            }, 2500);
+        }
+    }, [showMessage]);
+    useEffect(() => {
+        if (showErrorMessage) {
+            setTimeout(() => {
+                setErrorShowMessage(false);
+            }, 2500);
+        }
+    }, [setErrorShowMessage]);
+
+    const deleteResult = async (id) =>{
         //API call
         const response = await fetch(`${host}/api/result/deleteresult/${id}`,{
             method: 'DELETE',
@@ -191,14 +236,19 @@ const [results, setResults] = useState(resultsInitial);
             }
         });
         const json = await response.json();
-        console.log(json)
-
-        let newResults =  results.filter((results) => {return results._id !== id})
-        setResults(newResults);
+        if(json.success){
+            let newResults =  results.filter((results) => {return results._id !== id})
+            setResults(newResults);
+            setShowMessage(true);
+        }else{
+            setErrorShowMessage(true);
+        }
+        
     }
 
 
     return(
+        <>
         <ResultContext.Provider value={
             {
                 results, 
@@ -210,7 +260,14 @@ const [results, setResults] = useState(resultsInitial);
             }>
             {props.children}
         </ResultContext.Provider>
-        
+        <div>
+            {showMessage && <AlertMessage severe="success" timeout="2500" message="Result Deleted successfully!" />}
+
+            {showErrorMessage && <AlertMessage severe="error" timeout="2500" message="Sorry. Result could not be Deleted! Please Try Again." />}
+
+            {resultmail && <AlertMessage severe="info" timeout="2500" message="Result published emssage has been sent successfully via email." />}
+        </div>
+        </>
     )
 }
 

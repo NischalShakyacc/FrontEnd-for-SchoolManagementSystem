@@ -1,4 +1,4 @@
-import React,{ useState } from 'react';
+import React,{ useState,useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import AlertMessage from './AlertMessage';
@@ -10,6 +10,13 @@ export default function ConfirmDeleteEnroll(props) {
     const handleShow = () => setShow(true);
 
     const [deleteAlert, setDeleteAlert] = useState(false);
+    useEffect(() => {
+        if (deleteAlert) {
+            setTimeout(() => {
+                setDeleteAlert(false);
+            }, 2500);
+        }
+    }, [deleteAlert]);
 
     const handleDelete = () => {
             setShow(false);
@@ -53,7 +60,7 @@ export default function ConfirmDeleteEnroll(props) {
             </Button>
             </Modal.Footer>
         </Modal>
-        {deleteAlert && <AlertMessage severe="warning" timeout="3000" message="The enrollment form has been deleted." />}
+        {deleteAlert && <AlertMessage severe="info" timeout="2500" message="The enrollment form has been deleted." />}
         </>
 
     )

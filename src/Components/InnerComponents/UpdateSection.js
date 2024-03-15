@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useState,useEffect } from 'react';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
@@ -15,6 +15,13 @@ export default function UpdateSection(props) {
 
     //for alert
     const [showAlert, setShowAlert] = useState(false);
+    useEffect(() => {
+        if (showAlert) {
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 2500);
+        }
+    }, [showAlert]);
 
     const [show, setShow] = useState(false);
     
@@ -70,7 +77,17 @@ export default function UpdateSection(props) {
 
                 <Form.Group className="mb-3" >
                     <Form.Label>Notice</Form.Label>
-                    <Form.Control type="text" minLength={10} required placeholder="Enter Notice" value={notice.eusernotice} onChange={onchange} name='eusernotice'  />
+                    <textarea
+                    className="form-control"
+                    id="exampleFormControlTextarea1"
+                    rows="5"
+                    minLength={10} 
+                    required 
+                    placeholder="Enter Notice" 
+                    value={notice.eusernotice} 
+                    onChange={onchange} 
+                    name='eusernotice'  
+                    />
                     <Form.Text className="text-muted">
                         Notice must be longer than 10 letters.
                     </Form.Text>
@@ -87,7 +104,7 @@ export default function UpdateSection(props) {
             </Modal.Footer>
             </Form>
         </Modal>
-        {showAlert && <AlertMessage severe="success" timeout="3000" message="Notice updated successfully!" />}
+        {showAlert && <AlertMessage severe="success" timeout="2500" message="Notice updated successfully!" />}
     </>
     );
 }

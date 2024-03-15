@@ -8,7 +8,7 @@ export default function Footer() {
       <div className="top">
         <div className="footer-title">
             <h1>Delight Kindergarten High School</h1>
-            <p>Choose your schooling.</p>
+            <p>Learn To Serve</p>
         </div>
         <div>
             <a href="https://www.facebook.com/rasmirasakya" target="blank" >

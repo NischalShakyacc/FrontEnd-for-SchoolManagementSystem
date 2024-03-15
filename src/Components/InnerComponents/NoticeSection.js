@@ -35,7 +35,6 @@ export default function NoticeSection() {
         }
     },[localStorage.getItem('token'), fetchUserinfo])
     // eslint-disable-next-line
-    
 
     useEffect(()=>{
         fetchNotice();
@@ -107,7 +106,7 @@ export default function NoticeSection() {
                         </div>
                     </div>
                 </div>
-                {showDelAlert && <AlertMessage severe="warning" timeout="2000" message="Notice Deleted successfully!" />}
+                {showDelAlert && <AlertMessage severe="warning" timeout="2500" message="Notice Deleted successfully!" />}
                 </div>
                 )
             })

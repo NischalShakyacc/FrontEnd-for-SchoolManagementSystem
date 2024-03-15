@@ -12,7 +12,25 @@ export default function UpdateSection(props) {
     const {updateTeacher} = context;
 
     //for alert
-    const [showAlert, setShowAlert] = useState(false);
+    const [showGenderalert, setShowGenderalert] = useState(false);
+    const [showGradealert, setShowGradealert] = useState(false);
+
+    //Setting to false again
+    useEffect(() => {
+        if (showGradealert) {
+            setTimeout(() => {
+                setShowGradealert(false);
+            }, 2500);
+        }
+    }, [showGradealert]);
+
+    useEffect(() => {
+        if (showGenderalert) {
+            setTimeout(() => {
+                setShowGenderalert(false);
+            }, 2500);
+        }
+    }, [showGenderalert]);
 
     const [show, setShow] = useState(false);
     
@@ -23,27 +41,46 @@ export default function UpdateSection(props) {
         edob: '',
         eaddress:'',
         egrade: '',
-        egender: ''
+        egender: '',
+        eemail:''
     });
     
     // To open and close model box
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
     
+    //Validation 
+    const validate = (gender, grade) => {
+        const genders = ['Male', 'Female', 'Other'];
+        const classes = ['Toddler','Nursery','KG','1','2','3','4','5','6','7','8','9','10'];
+
+        if(!genders.includes(gender)){
+            setShowGenderalert(true)
+            return false;
+        }
+        if(!classes.includes(grade)){
+            setShowGradealert(true);
+            return false;
+        }
+        return true;
+    }
+
     //To update notice
     const handleUpdate = (e) =>{
         e.preventDefault();
-        handleClose();
+        const validity = validate(userinfo.egender,userinfo.egrade);
+
         setUserinfo({
             ename: userinfo.ename,
             ephone: userinfo.ephone,
             edob: userinfo.edob,
             eaddress: userinfo.eaddress,
             egrade: userinfo.egrade,
-            egender: userinfo.egender
+            egender: userinfo.egender,
+            eemail: userinfo.eemail
         });
-        //console.log(userinfo);
 
+        if(validity){
         updateTeacher(
             props.userid,
             userinfo.ename,
@@ -51,23 +88,17 @@ export default function UpdateSection(props) {
             userinfo.ephone,
             userinfo.edob,
             userinfo.eaddress, 
-            userinfo.egrade
+            userinfo.egrade,
+            userinfo.eemail
         );
-        setShowAlert(true);
+        handleClose();
+        }
+        
     }
     //fucntions used
     const onchange = (e)=>{
         setUserinfo({...userinfo,[e.target.name]:e.target.value})
     }
-
-    //Setting to false again
-    useEffect(() => {
-        if (showAlert) {
-            setTimeout(() => {
-                setShowAlert(false);
-            }, 2000);
-        }
-    }, [showAlert]);
 
     return (
         <>
@@ -85,7 +116,7 @@ export default function UpdateSection(props) {
 
                 <Form.Group className="mb-3">
                     <Form.Label>Name</Form.Label>
-                    <Form.Control type="text" minLength={4} required placeholder="Enter Name" value={userinfo.ename} onChange={onchange} name='ename'  />
+                    <Form.Control type="text" minLength={4} maxLength={50} required placeholder="Enter Name" value={userinfo.ename} onChange={onchange} name='ename'  />
                     <Form.Text className="text-muted">
                     Name must be longer than 4 letters.
                     </Form.Text>
@@ -114,10 +145,15 @@ export default function UpdateSection(props) {
 
                 <Form.Group className="mb-3" >
                     <Form.Label>Address</Form.Label>
-                    <Form.Control type="text" minLength={4} required placeholder="Enter Address" value={userinfo.eaddress} onChange={onchange} name='eaddress'  />
+                    <Form.Control type="text" minLength={4} maxLength={50} required placeholder="Enter Address" value={userinfo.eaddress} onChange={onchange} name='eaddress'  />
                     <Form.Text className="text-muted">
                         Address must be longer than 4 letters.
                     </Form.Text>
+                </Form.Group>
+
+                <Form.Group className="mb-3" >
+                    <Form.Label>Email</Form.Label>
+                    <Form.Control type="email"  required placeholder="Enter Email" value={userinfo.eemail} onChange={onchange} name='eemail'  />
                 </Form.Group>
                 
                 <Form.Group className="mb-3" >
@@ -125,8 +161,8 @@ export default function UpdateSection(props) {
                     <Form.Control type="text"  required placeholder="Enter Grade" value={userinfo.egrade} onChange={onchange} name='egrade'/>
                 </Form.Group>
                 <Form.Text className="text-muted">
-                        Toddler / Nursery / K.G. / 1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9 / 10
-                    </Form.Text>
+                        Toddler / Nursery / KG / 1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9 / 10
+                </Form.Text>
 
             </Modal.Body>
             <Modal.Footer>
@@ -138,8 +174,10 @@ export default function UpdateSection(props) {
             </Button>
             </Modal.Footer>
             </Form>
+            
+            {showGenderalert && <AlertMessage severe="error" timeout="2500" message="Gender should be Male Female or Other" />}
+            {showGradealert && <AlertMessage severe="error" timeout="2500" message="Grade should be (Toddler / Nursery / KG / 1 / 2 / 3 / 4 / 5 / 6 / 7 / 8 / 9 / 10)" />}
         </Modal>
-        {showAlert && <AlertMessage severe="success" timeout="3000" message="Profile updated successfully!" />}
     </>
     );
 }

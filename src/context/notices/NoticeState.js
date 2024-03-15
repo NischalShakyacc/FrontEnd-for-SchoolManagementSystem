@@ -1,7 +1,14 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import NoticeContext from "./NoticeContext";
+import AlertMessage from "../../Components/AlertMessage";
+import emailjs from '@emailjs/browser'
 
 const NoticeState = (props) =>{
+    //mail information
+    const serviceId = "service_8j7ajgu";
+    const templateId = "template_lks4yih";
+    const publicKey = "Lr2uqPaOU1GVb5ccJ";
+
     const host = "http://localhost:5000"
     const noticeInfo = [
     {
@@ -42,8 +49,6 @@ const NoticeState = (props) =>{
     /*
     const addNotice = async (title,usernotice) =>{
         //API call
-        
-        
         const response = await fetch(`${host}/api/notice/addnotice/`,{
             method: 'POST',
             headers :{
@@ -101,7 +106,15 @@ const NoticeState = (props) =>{
 
     }
 
-    
+    //Alert Message Handler
+    const [updatemail, setUpdatemail] = useState(false);
+    useEffect(() => {
+        if (updatemail) {
+            setTimeout(() => {
+                setUpdatemail(false);
+            }, 4000);
+        }
+    }, [updatemail]);
     //Update a notice
     const updateNotice = async (id,title,usernotice) =>{
         //API call
@@ -114,20 +127,28 @@ const NoticeState = (props) =>{
             body: JSON.stringify({title, usernotice})
         });
         const json = await response.json();
-
+        
         if(json.success){
             //send mail
-            console.log("Maile sent")
             const config = {
+                from_name: 'Delight School',
+                from_email: '019bim027@sxc.edu.np',
+                to_name: 'Students',
+                message: usernotice + '\n[Updated Notice] \n For more details check website.\nClick the link [http://localhost:3000/notice]',
+                /*
                 SecureToken : "7bfe5e2e-86df-4190-9d57-d0ac78a325cb",
                 To : '019bim027@sxc.edu.np',
                 From : "nischalshakyacc@gmail.com",
-                Subject : `Updated Notice From Delight School: ${title}`,
-                Body : usernotice
+                Subject : `Delight School: ${notice.title}`,
+                Body : notice.usernotice + '\n For more details check website.Click the link [http://localhost:3000/notice]'*/
             }
-            if(window.Email){
-                window.Email.send(config).then(()=> alert("Email Sent"))
-            }
+            emailjs.send(serviceId, templateId, config, publicKey)
+            .then((result) => {
+                console.log(result.text);
+                alert("Updated notice has been pulished.")
+            }, (error) => {
+                console.log(error.text);
+            });
         }
 
         let updatedNotice = JSON.parse(JSON.stringify(notices)) ;
@@ -144,9 +165,15 @@ const NoticeState = (props) =>{
     }
 
     return(
-    <NoticeContext.Provider value={{notices,setNotices,addNotice,deleteNotice, updateNotice,fetchNotice}}>
-            {props.children}
-        </NoticeContext.Provider>
+        <>
+            <NoticeContext.Provider 
+                value={{notices,setNotices,addNotice,deleteNotice, updateNotice,fetchNotice}}>
+                {props.children}
+            </NoticeContext.Provider>
+            <div>
+                {updatemail && <AlertMessage severe="info" timeout="4000" message="Updated notice has been sent successfully via email." />}
+            </div>
+        </>
     )
 }
 

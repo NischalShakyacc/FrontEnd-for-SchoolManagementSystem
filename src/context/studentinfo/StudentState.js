@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import StudentContext from './StudentContext'
+import AlertMessage from '../../Components/AlertMessage';
 
 export default function StudentState(props) {
     const host = "http://localhost:5000"
@@ -7,7 +8,7 @@ export default function StudentState(props) {
     const students = [
         {
             "_id": "647c6860ff8539ba829a223c",
-            "username": "sudent",
+            "username": "student",
             "password": "$2a$10$/9GMmQbQMGFqec.8r58q8emeUFrw1GrDvope5AUS5HG7Vs/YDQWQy",
             "name": "Nischal Edited",
             "address": "Kathmandu",
@@ -25,6 +26,7 @@ export default function StudentState(props) {
             "phone": "9861884348"
         }
     ];
+    const [studentinfoById, setStudentinfoById] = useState(students);
 
     const [studentinfo, setStudentinfo] = useState(students);
 
@@ -43,12 +45,10 @@ export default function StudentState(props) {
     }
 
     //Delete Student Profile
-    
     const deleteStudent = async (id) =>{
         console.log("deleting id "+ id)
 
-        //done Api call
-
+        //Api call
         const response = await fetch(`${host}/api/studentusers/deletestudent/${id}`,{
             method: 'DELETE',
             headers :{
@@ -60,7 +60,6 @@ export default function StudentState(props) {
         //console.log("deleted" + id)
         console.log(json)
         
-        
         const newStudents = studentinfo.filter((student) => {return student._id !== id})
         setStudentinfo(newStudents)
         
@@ -68,10 +67,28 @@ export default function StudentState(props) {
     
 
     //Update a user
+    const [showMessage,setShowMessage] = useState(false);
+    const [showErrorMessage,setErrorShowMessage] = useState(false);
     
-    const updateStudent = async (id, name, dob, address, gender, phone, house, fathername, fatherphone, mothername, motherphone) =>{
-        //API call
+    //Reset Update Alerts
+    useEffect(() => {
+        if (showMessage) {
+            setTimeout(() => {
+                setShowMessage(false);
+            }, 2500);
+        }
+    }, [showMessage]);
 
+    useEffect(() => {
+        if (showErrorMessage) {
+            setTimeout(() => {
+                setErrorShowMessage(false);
+            }, 2500);
+        }
+    }, [showErrorMessage]);
+
+    const updateStudent = async (id, name, dob, address, gender, phone, house, fathername, fatherphone, mothername, motherphone,email,grade) =>{
+        //API call
         const response = await fetch(`${host}/api/studentusers/updatestudent/${id}`,{
             method: 'PUT',
             headers :{
@@ -89,18 +106,24 @@ export default function StudentState(props) {
                     fathername, 
                     fatherphone, 
                     mothername, 
-                    motherphone
-
+                    motherphone,
+                    email,
+                    grade
                 })
         });
         const json = await response.json();
-        console.log(json)
+        if(json.success){
+            setShowMessage(true);
+            setStudentinfo(json.student);
+            
+        }else{
+            setErrorShowMessage(true);
+        }
     }
 
     //Get all students list
     const getStudentById = async (id) =>{
         //API call
-        
         const response = await fetch(`${host}/api/studentusers/getstudent/${id}`,{
             method: 'GET',
             headers :{
@@ -108,12 +131,13 @@ export default function StudentState(props) {
             }
         });
         const json = await response.json();
-        setStudentinfo(json);
+        setStudentinfoById(json);
     }
     
 
 
     return (
+        <>
         <StudentContext.Provider value={
                 {
                     studentinfo, 
@@ -121,10 +145,17 @@ export default function StudentState(props) {
                     getStudents,
                     updateStudent,
                     deleteStudent,
-                    getStudentById
+                    getStudentById,
+                    studentinfoById
                 }
             }>
             {props.children}
         </StudentContext.Provider>
+        <div>
+            {showMessage && <AlertMessage severe="success" timeout="2500" message="Profile updated successfully!" />}
+
+            {showErrorMessage && <AlertMessage severe="error" timeout="2500" message="Profile could not be updated! Please Try Again" />}
+        </div>
+        </>
     )
 }

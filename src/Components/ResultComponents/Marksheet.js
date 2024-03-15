@@ -18,7 +18,7 @@ export default function Marksheet(props) {
 
     const {userId} = useParams();
     const context = useContext(StudentContext);
-    const {getStudentById, studentinfo} = context;
+    const {getStudentById, studentinfoById} = context;
 
     const pdfGenerate = () => {
         const capture = document.querySelector('.marks'.concat(props.className));
@@ -61,10 +61,10 @@ export default function Marksheet(props) {
                 </div>
                 <div className='studentinfo'>
                     <div className='info'>
-                    {'Name: ' + studentinfo.name}
+                    {'Name: ' + studentinfoById.name}
                     </div>
                     <div className='info'>
-                    {"Grade: " + studentinfo.grade}
+                    {"Grade: " + studentinfoById.grade}
                     </div>
                 </div>
             </section>

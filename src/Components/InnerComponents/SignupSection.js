@@ -1,15 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState,useEffect } from 'react'
 import '../Styles/EnrollmentForm.css'
 import LoginInput from '../LoginInput'
 import AlertMessage from '../AlertMessage'
 
 export default function SignupSection() {
-  
-  const [showAlert,setShowAlert] = useState(false);
-  const [namevalidate,setNamevalidate] = useState(false);
-  const [passwordvalidate,setPasswordvalidate] = useState(false);
-  const [validation,setValidation] = useState(false);
-  const [uservalidate,setUservalidate] = useState(false);
 
   const [credentails, setCredentials] = useState({
     name:'',
@@ -37,33 +31,92 @@ export default function SignupSection() {
 
   const displayInvalid = () =>{
     setDismessage({...dismessage,
-      'message':"Please enter different username and password.",
+      'message':"Invalid Details",
       'colorclass': 'danger'})
   }
 
+
+  //Alerts and validation
+  const [showAlert,setShowAlert] = useState(false);
+  const [namevalidate,setNamevalidate] = useState(false);
+  const [passwordvalidate,setPasswordvalidate] = useState(false);
+  const [emailvalidate,setEmailvalidate] = useState(false);
+  const [validation,setValidation] = useState(false);
+  const [uservalidate,setUservalidate] = useState(false);
+
   const validate = () =>{
-    const {name,password, cpassword} = credentails ;
-    if(name.length<4){
+    const {name,password,email, cpassword} = credentails;
+    const validRegex = /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/;
+    setValidation(false);
+    if(name.length<5){
       setNamevalidate(true);
-      setValidation(false);
       
     }else if(password !== cpassword){
       setPasswordvalidate(true);
-      setValidation(false);
-      
+
+    }else if(!email.match(validRegex)){
+      setEmailvalidate(true);
+    
     }else{
       setValidation(true);
     }
   }
   
+  //Setting to false again
+    useEffect(() => {
+        if (showAlert) {
+            setTimeout(() => {
+                setShowAlert(false);
+            }, 2500);
+        }
+    }, [showAlert]);
+
+    useEffect(() => {
+        if (namevalidate) {
+            setTimeout(() => {
+                setNamevalidate(false);
+            }, 2500);
+        }
+    }, [namevalidate]);
+
+    useEffect(() => {
+        if (passwordvalidate) {
+            setTimeout(() => {
+                setPasswordvalidate(false);
+            }, 2500);
+        }
+    }, [passwordvalidate]);
+
+    useEffect(() => {
+        if (emailvalidate) {
+            setTimeout(() => {
+                setEmailvalidate(false);
+                setValidation(false);
+                setUservalidate(false);
+            }, 2500);
+        }
+    }, [emailvalidate]);
+
+    useEffect(() => {
+        if (validation) {
+            setTimeout(() => {
+                setValidation(false);
+            }, 2500);
+        }
+    }, [validation]);
+
+    useEffect(() => {
+        if (uservalidate) {
+            setTimeout(() => {
+                setUservalidate(false);
+            }, 2500);
+        }
+    }, [uservalidate]);
+
+
   //Function to hadle sign up
   const handleSignup = async (e) =>{
     e.preventDefault();
-    setShowAlert(false)
-    setNamevalidate(false);
-    setPasswordvalidate(false);
-    setUservalidate(false);
-    setValidation(false);
     
     validate();
 
@@ -109,9 +162,9 @@ export default function SignupSection() {
             name:'name',
             type:'text',
             placeholder:'Full Name',
-            label:'Name:',
+            labels:'Name:',
             required:true,
-            message: 'Please Enter Full Name.',
+            message: 'Enter Full Name. (Must be More than 5 characters.)',
             minLength : 4
         },
         {
@@ -119,9 +172,9 @@ export default function SignupSection() {
             name:'username',
             type:'text',
             placeholder:'Username',
-            label:'Username:',
+            labels:'Username:',
             required:true,
-            minLength : 5,
+            minLength : 4,
             message : 'Username Must be Unique.'
         },
         {
@@ -129,7 +182,7 @@ export default function SignupSection() {
             name:'email',
             type:'email',
             placeholder:'Email',
-            label:'Email:',
+            labels:'Email:',
             required:true,
             message : 'Enter a Valid Email.'
         },
@@ -138,7 +191,7 @@ export default function SignupSection() {
             name:'password',
             type:'password',
             placeholder:'Password',
-            label:'Password:',
+            labels:'Password:',
             required:true,
             minLength : 5
         },
@@ -147,7 +200,7 @@ export default function SignupSection() {
             name:'cpassword',
             type:'password',
             placeholder:'Re-Type Password',
-            label:'Confirm:',
+            labels:'Confirm:',
             message:'Re-Type Password. Passwords Must Match.',
             required:true,
         }
@@ -158,13 +211,12 @@ export default function SignupSection() {
         <div className='login-form'>
         <h2 className={dismessage.colorclass}>{dismessage.message}</h2>
 
-        <p className='messageformLarge'>An account created message will be displayed for every successfull account creation.</p>
-
         <form onSubmit={handleSignup} >
         {
             inputs.map((input,index) => (
               <div key = {index}>
               <p className='messageform' >{input.message}</p>
+              <label>{input.labels}</label>
                 <LoginInput className='loginfields' {...input} value={credentails[input.name]} onChange={onChange} />
               </div>
             ))
@@ -196,13 +248,13 @@ export default function SignupSection() {
             <button type='submit'>Create Account</button>
         </form>
     </div>
-    {showAlert && <AlertMessage severe="success" timeout="3000" message="Account Created Successfully!" />}
+    {showAlert && <AlertMessage severe="success" timeout="2500" message="Account Created Successfully!" />}
 
-    {namevalidate && <AlertMessage severe="error" timeout="3000" message="Please enter full name." />}
+    {namevalidate && <AlertMessage severe="error" timeout="2500" message="Please enter full name." />}
 
-    {passwordvalidate && <AlertMessage severe="error" timeout="3000" message="Password does not match." />}
+    {passwordvalidate && <AlertMessage severe="error" timeout="2500" message="Password does not match." />}
 
-    {uservalidate && <AlertMessage severe="error" timeout="3000" message="Username is used. Please try another Username." />}
+    {uservalidate && <AlertMessage severe="error" timeout="2500" message="Username is used. Please try another Username." />}
     </div>
   )
 }

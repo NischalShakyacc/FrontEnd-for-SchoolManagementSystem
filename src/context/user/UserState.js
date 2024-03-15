@@ -1,5 +1,6 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import UserContext from "./UserContext";
+import AlertMessage from "../../Components/AlertMessage";
 
 const UserState = (props) =>{
     const host = "http://localhost:5000"
@@ -89,14 +90,30 @@ const UserState = (props) =>{
         //console.log("deleted" + id)
         console.log(json)
         
-        /*
-        const newTeacher = teachers.filter((teacher) => {return teacher._id !== id})
-        setTeachersinfo(newTeacher)
-        */
     }
 
     //Update Teacher Profile
-    const updateTeacher = async (id, name, gender, phone, dob, address, grade) => {
+    //Update Alerts
+    const [showMessage,setShowMessage] = useState(false);
+    const [showErrorMessage,setErrorShowMessage] = useState(false);
+    
+    //Reset Update Alerts
+    useEffect(() => {
+        if (showMessage) {
+            setTimeout(() => {
+                setShowMessage(false);
+            }, 2500);
+        }
+    }, [showMessage]);
+    useEffect(() => {
+        if (showErrorMessage) {
+            setTimeout(() => {
+                setErrorShowMessage(false);
+            }, 2500);
+        }
+    }, [setErrorShowMessage]);
+
+    const updateTeacher = async (id, name, gender, phone, dob, address, grade,email) => {
         //Api call
         const response = await fetch(`${host}/api/users/updateteacher/${id}`,{
             method: 'PUT',
@@ -111,12 +128,21 @@ const UserState = (props) =>{
                     phone,
                     dob,
                     address,
-                    grade
+                    grade,
+                    email
                 })
         });
         
         const json = await response.json();
-        console.log(json)
+        if(json.success){
+            setShowMessage(true);
+            setTeachersinfo(json.teacher);
+            setTimeout(()=>{
+                window.location.reload()
+            },[1000])
+        }else{
+            setErrorShowMessage(true);
+        }
         
         /*
         for(let index = 0;index <teachersinfo.length; index++){
@@ -137,6 +163,7 @@ const UserState = (props) =>{
 
 
     return(
+        <>
     <UserContext.Provider value={
         {
             userinfo,
@@ -151,6 +178,12 @@ const UserState = (props) =>{
     }>
     {props.children}
     </UserContext.Provider>
+    <div>
+        {showMessage && <AlertMessage severe="success" timeout="2500" message="Profile updated successfully!" />}
+
+        {showErrorMessage && <AlertMessage severe="error" timeout="2500" message="Profile could not be updated! Please Try Again" />}
+    </div>
+    </>
     )
 }
 

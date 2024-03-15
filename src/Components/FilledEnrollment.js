@@ -22,7 +22,7 @@ export default function FilledEnrollment(props) {
             dpi:200
         }).then((canvas)=>{
             const imgData = canvas.toDataURL('image/jpeg');
-            const doc = new jsPDF('p', 'mm', 'a4');
+            const doc = new jsPDF('p', 'mm', 'letter');
             const componentWidth = doc.internal.pageSize.getWidth();
             const componentHeight = doc.internal.pageSize.getHeight();
             doc.addImage(imgData,'JPEG', 0, 0, componentWidth, componentHeight);

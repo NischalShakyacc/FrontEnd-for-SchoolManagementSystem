@@ -2,8 +2,6 @@ import React, { Component } from 'react'
 
 export default class DestinationData extends Component {
     render() {
-        
-
         return (
         <div className={this.props.cName}>
             <div className='desc-text'>

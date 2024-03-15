@@ -81,7 +81,6 @@ export default function AddResult() {
         }else{
             setAlert(true);
         }
-        
     }
 
     const onChange = (e) => {
@@ -94,12 +93,12 @@ export default function AddResult() {
         if (alert) {
             setTimeout(() => {
                 setAlert(false);
-            }, 2000);
+            }, 2500);
         }
         if (showsubmit) {
             setTimeout(() => {
                 setShowsubmit(false);
-            }, 2000);
+            }, 2500);
         }
     }, [alert, showsubmit]);
     
@@ -177,7 +176,6 @@ export default function AddResult() {
                 <label htmlFor='remarks'>Add Remarks</label>
                 <textarea id='remarks' rows="4" cols="50" placeholder="Remarks here" name='remarks' onChange={onChange} required minLength={5} ></textarea>
                 <p className='suggestion'>Describe the overall performance.</p>
-            
 
         <div className='marksection'>
         <h5> Add Marks (Out of 100)</h5>
@@ -205,6 +203,7 @@ export default function AddResult() {
         <div className='subjectgroup'>
             <input type='text' placeholder='Subject 3' className='subject' id='subject3' name='subject3'
             onChange={onChange} 
+            
             /> 
             <input type='number' placeholder='Marks 3' className='marks' id='mark3' name='mark3'
             min={0}
@@ -216,51 +215,61 @@ export default function AddResult() {
         <div className='subjectgroup'>
             <input type='text' placeholder='Subject 4' className='subject' id='subject4' name='subject4'
             onChange={onChange} 
+            
             /> 
             <input type='number' placeholder='Marks 4' className='marks' id='mark4' name='mark4'
             min={0}
             max={100}
             onChange={onChange} 
+            
             />
         </div>
         <div className='subjectgroup'>
             <input type='text' placeholder='Subject 5' className='subject'  id='subject5' name='subject5'
             onChange={onChange}
+            
             />
             <input type='number' placeholder='Marks 5' className='marks' id='mark5' name='mark5'
             min={0}
             max={100}
-            onChange={onChange} 
+            onChange={onChange}
+            
             />
         </div>
         <div className='subjectgroup'>
             <input type='text' placeholder='Subject 6' className='subject'  id='subject6' name='subject6'
             onChange={onChange}
+            
             />
             <input type='number' placeholder='Marks 6' className='marks' id='mark6' name='mark6'
             min={0}
             max={100}
             onChange={onChange} 
+            
             />
         </div>
         <div className='subjectgroup'>
             <input type='text' placeholder='Subject 7' className='subject'  id='subject7' name='subject7'
             onChange={onChange}
+            
             />
             <input type='number' placeholder='Marks 7' className='marks' id='mark7' name='mark7'
             min={0}
             max={100}
             onChange={onChange} 
+            
             />
         </div>
         <div className='subjectgroup'>
             <input type='text' placeholder='Subject 8' className='subject'  id='subject8' name='subject8'
             onChange={onChange}
+            
             />
             <input type='number' placeholder='Marks 8' className='marks'  id='mark8' name='mark8'
             min={0}
             max={100}
             onChange={onChange} 
+            
             />
         </div>
         </div>
@@ -279,8 +288,8 @@ export default function AddResult() {
         
         </article>
         </div>
-        {alert && <AlertMessage severe="warning" timeout="3000" message="Calculate total and percentage by clicking on the button above." />}
-        {showsubmit && <AlertMessage severe="success" timeout="3000" message="The marksheet has been published." />}
+        {alert && <AlertMessage severe="warning" timeout="2500" message="Calculate total and percentage by clicking on the button above." />}
+        {showsubmit && <AlertMessage severe="success" timeout="2500" message="The marksheet has been published." />}
     </>
     );
 }

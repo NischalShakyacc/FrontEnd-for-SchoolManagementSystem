@@ -2,15 +2,12 @@ import React, { useContext, useEffect } from 'react'
 import { DataGrid } from '@mui/x-data-grid';
 import { NavLink, useNavigate, useParams } from 'react-router-dom';
 import StudentContext from '../../context/studentinfo/StudentContext';
-//import AddresultOpen from './AddresultOpen';
 import '../Styles/Button.css'
 
 
 export default function ResultTable() {
 
     const {classID} = useParams();
-    
-    let info = [];
 
     const context = useContext(StudentContext);
     const {studentinfo,getStudents} = context;
@@ -19,14 +16,11 @@ export default function ResultTable() {
     useEffect(()=>{
         if(!localStorage.getItem('token')){
             navigate('/login');
-        }else{
-            
+        }   
         getStudents(classID);  
-        }
     },[]);
-
+    
     const columns = [
-        
         { field: 'id', headerName: 'ID', width: 50 },
         { field: 'username', headerName: 'Username', width: 100 },
         { field: 'name', headerName: 'Full Name', width: 150 },
@@ -44,7 +38,7 @@ export default function ResultTable() {
             headerName: "View Results",
             sortable: false,
             renderCell: ({ row }) =>
-                <NavLink to={"/viewresult/"+ row.idreal+"/" +row.name}>  
+                <NavLink to={"/result/"+ row.idreal+"/" +row.name}>  
                     <button className='action-button-view'><i className="fa-regular fa-eye"></i>
                     View Result
                     </button>
@@ -54,18 +48,20 @@ export default function ResultTable() {
         },
     ];
     
-    if(localStorage.getItem('token')){
-        studentinfo.forEach((value,index)=>{
-            info.push({
-                id: ++index, 
-                username: value.username,
-                name: value.name,       
-                addresult: '' ,
-                viewresult: '' ,
-                idreal : value.username, //thischange was value._id
+    let info = [];
+        if(localStorage.getItem('token')){
+            studentinfo.forEach((value,index)=>{
+                info.push({
+                    id: ++index, 
+                    username: value.username,
+                    name: value.name,       
+                    addresult: '' ,
+                    viewresult: '' ,
+                    idreal : value.username, //thischange was value._id
+                })
             })
-        })
-    }
+        }
+    
 
     return (
         <>

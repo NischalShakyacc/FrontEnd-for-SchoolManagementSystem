@@ -3,9 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import * as XLSX from 'xlsx'
 import { DataGrid } from '@mui/x-data-grid';
 import AlertMessage from '../../Components/AlertMessage';
+import emailjs from '@emailjs/browser'
 
 export default function GroupResult() {
-
+    //mail information
+    const serviceId = "service_8j7ajgu";
+    const templateId = "template_lks4yih";
+    const publicKey = "Lr2uqPaOU1GVb5ccJ";
     const navigate = useNavigate()
     useEffect(()=>{
         if(!localStorage.getItem('token')){
@@ -26,7 +30,6 @@ export default function GroupResult() {
 
     const createResult = async (row) =>{
         const convertedObj = lowerize(row);
-        console.log(convertedObj);
         
         try{
         const response = await fetch(`http://localhost:5000/api/result/addresult`,{
@@ -43,18 +46,22 @@ export default function GroupResult() {
             setCreated(true)
             //send mail
             const config = {
-                SecureToken : "7bfe5e2e-86df-4190-9d57-d0ac78a325cb",
-                To : '019bim027@sxc.edu.np',
-                From : "nischalshakyacc@gmail.com",
-                Subject : `Delight School: Your result has been published.`,
-                Body : `Your result has been published please check the school website to view the result.`
+                from_name: 'Delight School',
+                from_email: '019bim027@sxc.edu.np',
+                to_name: 'Students',
+                message: `Your result has been published please check the school website to view the result.`
+                
             }
-            if(window.Email){
-                window.Email.send(config).then(()=> alert("Email Sent"))
+            emailjs.send(serviceId, templateId, config, publicKey)
+            .then((result) => {
+                console.log(result.text);
+                alert("Result has been mailed.")
+            }, (error) => {
+                console.log(error.text);
+            });
+            }else{
+                setNotcreate(true)
             }
-        }else{
-            setNotcreate(true)
-        }
         }
         catch(error){
             console.log(error);
@@ -137,7 +144,7 @@ export default function GroupResult() {
 
     return (
         <div id='innerHero'>
-        <h2>Create Multiple Accounts</h2>
+        <h2>Create Multiple Results</h2>
         <div className='rsteps'>
             <div className='step rstep1'>
                 <img src={require('../../images/rstep1.png')} alt='stepImage' />
@@ -177,8 +184,8 @@ export default function GroupResult() {
                 pageSizeOptions={[5, 10, 50]}
             />
         </div>
-        {created && <AlertMessage severe="success" timeout="2000" message="Result Published successfully!"/>}
-        {notcreate && <AlertMessage severe="warning" timeout="2000" message="Check Data !"/>}
+        {created && <AlertMessage severe="success" timeout="2500" message="Result Published successfully!"/>}
+        {notcreate && <AlertMessage severe="warning" timeout="2500" message="Check Data !"/>}
         </div>
         
     )

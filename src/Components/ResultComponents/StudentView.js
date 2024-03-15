@@ -22,7 +22,7 @@ export default function StudentView() {
         <div id='innerHero'>
                 <HeaderComponent name='Result 📃' description= {'View all the your results here '}
                 />
-                <NavLink to={"/viewresult/"+ userinfo._id+"/" +userinfo.name}>
+                <NavLink to={"/result/"+ userinfo.username+"/" +userinfo.name}>
                     <button className='grid-button fetchresult' type='submit' style={{'maxWidth' : '40rem'}}>Fetch Results</button>
                 </NavLink>
                 

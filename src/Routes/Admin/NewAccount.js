@@ -14,7 +14,7 @@ export default function NewAccount() {
         if(localStorage.getItem('token')){
             fetchUserinfo();
             if(userinfo.usertype !== 'Admin'){
-                navigate('/profilestudent');
+                navigate('/');
             }
         }else{
             navigate('/login');
